@@ -171,30 +171,414 @@
       letter-spacing: -0.1px;
     }
 
-    /* Базовые кнопки */
-    .btn {
-      padding: 12px 16px;
-      border-radius: 14px;
+    /* Стили экрана Аудита Тела (Onboarding Modal) */
+    .onboarding-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg-color);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 16px;
+      overflow-y: auto;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .onboarding-overlay.hidden {
+      display: none;
+    }
+
+    .onboard-progress {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .progress-step {
+      flex: 1;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 99px;
+      transition: background 0.3s ease;
+    }
+
+    .progress-step.active {
+      background: #38bdf8;
+    }
+
+    .onboard-step-container {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .onboard-step-container.active {
+      display: flex;
+    }
+
+    .onboard-hero {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .onboard-emoji {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+
+    .onboard-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      margin-bottom: 6px;
+    }
+
+    .onboard-desc {
+      font-size: 13.5px;
+      color: var(--hint-color);
+      line-height: 1.4;
+    }
+
+    .onboard-inputs-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .gender-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .gender-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 2px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 18px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .gender-card.active {
+      background: rgba(56, 189, 248, 0.14);
+      border-color: #38bdf8;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.25);
+    }
+
+    .gender-card-icon {
+      font-size: 36px;
+      margin-bottom: 8px;
+    }
+
+    .gender-card-title {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .numeric-input-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .num-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-color);
+    }
+
+    .num-field-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .num-input {
+      background: transparent;
       border: none;
+      color: #38bdf8;
+      font-size: 22px;
+      font-weight: 800;
+      width: 70px;
+      text-align: right;
+      outline: none;
+    }
+
+    .num-unit {
+      font-size: 14px;
+      color: var(--hint-color);
+      font-weight: 600;
+    }
+
+    .activity-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .activity-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .activity-card.active {
+      background: rgba(16, 185, 129, 0.14);
+      border-color: #10b981;
+    }
+
+    .activity-icon {
+      font-size: 28px;
+    }
+
+    .activity-main {
+      flex: 1;
+    }
+
+    .activity-title {
       font-size: 14px;
       font-weight: 700;
+    }
+
+    .activity-sub {
+      font-size: 11.5px;
+      color: var(--hint-color);
+      margin-top: 2px;
+    }
+
+    .onboard-footer {
+      margin-top: auto;
+      padding-top: 16px;
+    }
+
+    .btn-next {
+      width: 100%;
+      height: 48px;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(135deg, #0284c7 0%, #0284c7 100%);
+      background-color: #0284c7;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 800;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      text-decoration: none;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.15s ease;
     }
-    .btn:active { transform: scale(0.96); }
-    .btn-primary {
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      color: #ffffff;
-      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.38);
+    .btn-next:active { transform: scale(0.97); }
+
+    /* Результат аудита */
+    .audit-result-badge {
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 16px;
+      padding: 16px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .bmi-number {
+      font-size: 32px;
+      font-weight: 900;
+      color: #38bdf8;
+      letter-spacing: -0.5px;
+    }
+
+    .bmi-category {
+      font-size: 14px;
+      font-weight: 700;
+      color: #10b981;
+      margin-top: 2px;
+    }
+
+    .result-macros-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .result-macro-pill {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 10px 4px;
+      border-radius: 12px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
+
+  <!-- ============================================== -->
+  <!-- ЭКРАН ПЕРВИЧНОГО АУДИТА ТЕЛА (ONBOARDING) -->
+  <!-- ============================================== -->
+  <div id="onboardingOverlay" class="onboarding-overlay">
+    <!-- Полоса прогресса 4 шагов -->
+    <div class="onboard-progress">
+      <div class="progress-step active" id="pStep1"></div>
+      <div class="progress-step" id="pStep2"></div>
+      <div class="progress-step" id="pStep3"></div>
+      <div class="progress-step" id="pStep4"></div>
+    </div>
+
+    <!-- ШАГ 1: Пол и Возраст -->
+    <div class="onboard-step-container active" id="step1">
+      <div class="onboard-hero">
+        <div class="onboard-emoji">👋</div>
+        <div class="onboard-title">Добро пожаловать!</div>
+        <div class="onboard-desc">Пройдите аудит тела за 30 секунд, чтобы составить идеальный персональный рацион.</div>
+      </div>
+
+      <div class="onboard-inputs-wrap">
+        <div class="gender-grid">
+          <div class="gender-card active" id="genderMale" onclick="selectGender('male')">
+            <div class="gender-card-icon">👨</div>
+            <div class="gender-card-title">Мужчина</div>
+          </div>
+          <div class="gender-card" id="genderFemale" onclick="selectGender('female')">
+            <div class="gender-card-icon">👩</div>
+            <div class="gender-card-title">Женщина</div>
+          </div>
+        </div>
+
+        <div class="numeric-input-card">
+          <span class="num-label">🎂 Возраст</span>
+          <div class="num-field-wrap">
+            <input type="number" id="inAge" class="num-input" value="24" min="14" max="90">
+            <span class="num-unit">лет</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="onboard-footer">
+        <button class="btn-next" onclick="goToStep(2)">Далее →</button>
+      </div>
+    </div>
+
+    <!-- ШАГ 2: Рост и Вес -->
+    <div class="onboard-step-container" id="step2">
+      <div class="onboard-hero">
+        <div class="onboard-emoji">📏</div>
+        <div class="onboard-title">Параметры тела</div>
+        <div class="onboard-desc">Необходимы для медицински точного расчёта индекса массы тела (ИМТ).</div>
+      </div>
+
+      <div class="onboard-inputs-wrap">
+        <div class="numeric-input-card">
+          <span class="num-label">Рост в сантиметрах</span>
+          <div class="num-field-wrap">
+            <input type="number" id="inHeight" class="num-input" value="178" min="120" max="230">
+            <span class="num-unit">см</span>
+          </div>
+        </div>
+
+        <div class="numeric-input-card">
+          <span class="num-label">Текущий вес</span>
+          <div class="num-field-wrap">
+            <input type="number" id="inWeight" class="num-input" value="73" min="35" max="220">
+            <span class="num-unit">кг</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="onboard-footer">
+        <button class="btn-next" onclick="goToStep(3)">Далее →</button>
+      </div>
+    </div>
+
+    <!-- ШАГ 3: Образ жизни и активность -->
+    <div class="onboard-step-container" id="step3">
+      <div class="onboard-hero">
+        <div class="onboard-emoji">🏃</div>
+        <div class="onboard-title">Образ жизни</div>
+        <div class="onboard-desc">Сколько энергии вы тратите в течение дня?</div>
+      </div>
+
+      <div class="activity-list">
+        <div class="activity-card" onclick="selectActivity(this, 1.2)">
+          <div class="activity-icon">🛋</div>
+          <div class="activity-main">
+            <div class="activity-title">Сидячий образ жизни</div>
+            <div class="activity-sub">Офис, работа за компьютером, мало шагов</div>
+          </div>
+        </div>
+
+        <div class="activity-card active" onclick="selectActivity(this, 1.4)">
+          <div class="activity-icon">🚶</div>
+          <div class="activity-main">
+            <div class="activity-title">Умеренная активность</div>
+            <div class="activity-sub">Пешие прогулки, разминки, 1-2 тренировки</div>
+          </div>
+        </div>
+
+        <div class="activity-card" onclick="selectActivity(this, 1.6)">
+          <div class="activity-icon">🏋️</div>
+          <div class="activity-main">
+            <div class="activity-title">Активные тренировки</div>
+            <div class="activity-sub">Спорт 3-5 раз в неделю, подвижная работа</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="onboard-footer">
+        <button class="btn-next" onclick="finishAuditAndCalculate()">Рассчитать мой рацион 🚀</button>
+      </div>
+    </div>
+
+    <!-- ШАГ 4: Результат аудита (Вход в приложение) -->
+    <div class="onboard-step-container" id="step4">
+      <div class="onboard-hero">
+        <div class="onboard-emoji">🎉</div>
+        <div class="onboard-title">Ваш аудит готов!</div>
+        <div class="onboard-desc">Вот персональная норма калорий и БЖУ под ваш метаболизм:</div>
+      </div>
+
+      <div class="audit-result-badge">
+        <div style="font-size: 11px; text-transform: uppercase; color: var(--hint-color); font-weight: 700;">Индекс массы тела (ИМТ)</div>
+        <div class="bmi-number" id="resBmi">23.0</div>
+        <div class="bmi-category" id="resBmiCat">Нормальная масса тела ✅</div>
+
+        <div class="result-macros-row">
+          <div class="result-macro-pill">
+            <div style="font-size: 10px; color: var(--hint-color);">Калории</div>
+            <div style="font-size: 16px; font-weight: 800; color: #38bdf8;" id="resCal">2 240</div>
+          </div>
+          <div class="result-macro-pill">
+            <div style="font-size: 10px; color: var(--protein);">Белки</div>
+            <div style="font-size: 16px; font-weight: 800; color: var(--protein);" id="resProtein">130г</div>
+          </div>
+          <div class="result-macro-pill">
+            <div style="font-size: 10px; color: var(--fat);">Жиры</div>
+            <div style="font-size: 16px; font-weight: 800; color: var(--fat);" id="resFats">65г</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="onboard-footer">
+        <button class="btn-next" style="background: linear-gradient(135deg, #10b981, #059669);" onclick="enterApp()">
+          Перейти в приложение →
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- Верхняя шапка -->
   <div class="header">
@@ -317,6 +701,108 @@
       document.getElementById('screenTitle').innerText = title;
       document.getElementById('screenSubtitle').innerText = subtitle;
     }
+
+    // ==============================================
+    // ЛОГИКА АУДИТА ТЕЛА (ONBOARDING FLOW)
+    // ==============================================
+    let userAudit = {
+      gender: 'male',
+      age: 24,
+      height: 178,
+      weight: 73,
+      activityMultiplier: 1.4,
+      bmi: 23.0,
+      bmiCat: 'Нормальная масса тела',
+      targetCal: 2240,
+      targetProtein: 130,
+      targetFats: 65,
+      targetCarbs: 260
+    };
+
+    function selectGender(g) {
+      triggerHaptic();
+      userAudit.gender = g;
+      document.getElementById('genderMale').classList.toggle('active', g === 'male');
+      document.getElementById('genderFemale').classList.toggle('active', g === 'female');
+    }
+
+    function selectActivity(el, multiplier) {
+      triggerHaptic();
+      userAudit.activityMultiplier = multiplier;
+      document.querySelectorAll('.activity-card').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function goToStep(stepNum) {
+      triggerHaptic();
+      // Переключаем шаги
+      document.querySelectorAll('.onboard-step-container').forEach(s => s.classList.remove('active'));
+      const nextStepEl = document.getElementById('step' + stepNum);
+      if (nextStepEl) nextStepEl.classList.add('active');
+
+      // Переключаем индикаторы прогресса
+      for (let i = 1; i <= 4; i++) {
+        const pEl = document.getElementById('pStep' + i);
+        if (pEl) pEl.classList.toggle('active', i <= stepNum);
+      }
+    }
+
+    function finishAuditAndCalculate() {
+      triggerHaptic();
+      // Считываем значения полей
+      userAudit.age = parseInt(document.getElementById('inAge').value) || 24;
+      userAudit.height = parseFloat(document.getElementById('inHeight').value) || 178;
+      userAudit.weight = parseFloat(document.getElementById('inWeight').value) || 73;
+
+      // 1. Расчёт ИМТ
+      const heightM = userAudit.height / 100.0;
+      const bmi = userAudit.weight / (heightM * heightM);
+      userAudit.bmi = Math.round(bmi * 10) / 10;
+
+      if (bmi < 18.5) userAudit.bmiCat = 'Дефицит массы тела';
+      else if (bmi < 25.0) userAudit.bmiCat = 'Нормальная масса тела ✅';
+      else if (bmi < 30.0) userAudit.bmiCat = 'Избыточная масса';
+      else userAudit.bmiCat = 'Ожирение';
+
+      // 2. Расчет нормы по Миффлину - Сан-Жеору
+      let bmr = 10 * userAudit.weight + 6.25 * userAudit.height - 5 * userAudit.age;
+      bmr += (userAudit.gender === 'male' ? 5 : -161);
+      const tdee = Math.round(bmr * userAudit.activityMultiplier);
+
+      userAudit.targetCal = tdee;
+      userAudit.targetProtein = Math.round(userAudit.weight * 1.8);
+      userAudit.targetFats = Math.round(userAudit.weight * 0.9);
+      userAudit.targetCarbs = Math.round((tdee - (userAudit.targetProtein * 4 + userAudit.targetFats * 9)) / 4);
+
+      // Отображаем на шаге 4
+      document.getElementById('resBmi').innerText = userAudit.bmi;
+      document.getElementById('resBmiCat').innerText = userAudit.bmiCat;
+      document.getElementById('resCal').innerText = userAudit.targetCal.toLocaleString();
+      document.getElementById('resProtein').innerText = userAudit.targetProtein + 'г';
+      document.getElementById('resFats').innerText = userAudit.targetFats + 'г';
+
+      goToStep(4);
+    }
+
+    function enterApp() {
+      triggerHaptic();
+      // Сохраняем флаг прохождения аудита в локальное хранилище
+      localStorage.setItem('nutrition_audit_completed', 'true');
+      localStorage.setItem('nutrition_user_data', JSON.stringify(userAudit));
+
+      // Закрываем оверлей аудита
+      const overlay = document.getElementById('onboardingOverlay');
+      if (overlay) overlay.classList.add('hidden');
+    }
+
+    // Проверка при открытии: проходил ли пользователь аудит ранее
+    window.addEventListener('DOMContentLoaded', () => {
+      const isDone = localStorage.getItem('nutrition_audit_completed');
+      if (isDone === 'true') {
+        const overlay = document.getElementById('onboardingOverlay');
+        if (overlay) overlay.classList.add('hidden');
+      }
+    });
   </script>
 </body>
 </html>
