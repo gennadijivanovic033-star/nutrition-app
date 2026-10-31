@@ -623,6 +623,66 @@
       background: rgba(56, 189, 248, 0.2);
       border-color: #38bdf8;
     }
+
+    /* Раздел 6: Меню на день и Рецепты */
+    .meal-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .meal-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 12px 14px;
+      position: relative;
+    }
+
+    .meal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .meal-tag {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .meal-cals {
+      font-size: 12px;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+
+    .meal-dish-name {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--text-color);
+      margin-bottom: 4px;
+    }
+
+    .meal-ingredients {
+      font-size: 12px;
+      color: var(--hint-color);
+      line-height: 1.4;
+    }
+
+    .meal-macros {
+      margin-top: 8px;
+      display: flex;
+      gap: 12px;
+      font-size: 11px;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
@@ -909,12 +969,79 @@
 
   <!-- РАЗДЕЛ 6: Экран рецепта / Меню на день (Киллер-фича) -->
   <section id="tab-recipe" class="tab-section">
+    <!-- Шапка плана питания -->
+    <div class="card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(56, 189, 248, 0.08)); border-color: rgba(16, 185, 129, 0.3);">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <div style="font-size: 15px; font-weight: 800; color: #10b981;">🍽 Рацион из вашей корзины</div>
+          <div style="font-size: 11.5px; color: var(--hint-color); margin-top: 2px;">4 сбалансированных приёма пищи на 1 день</div>
+        </div>
+        <span style="font-size: 13px; font-weight: 800; color: #38bdf8;">🔥 2 140 ккал</span>
+      </div>
+    </div>
+
+    <!-- Таймлайн 4 приёмов пищи -->
     <div class="card">
-      <div class="section-title">Раздел 6: Рецепты и Меню на день</div>
-      <div class="placeholder-box">
-        <div class="placeholder-icon">🍽</div>
-        <div class="placeholder-title">Раскладка рациона</div>
-        <div class="placeholder-desc">Здесь бот превратит набор купленных продуктов в готовый план питания: Завтрак, Обед, Перекус и Ужин!</div>
+      <div class="meal-timeline">
+        <!-- 1. Завтрак -->
+        <div class="meal-card" style="border-left: 3px solid #f59e0b;">
+          <div class="meal-header">
+            <span class="meal-tag" style="color: #f59e0b;">☕ Завтрак · 08:30</span>
+            <span class="meal-cals">520 ккал</span>
+          </div>
+          <div class="meal-dish-name">Овсяная каша Геркулес + 2 варёных яйца</div>
+          <div class="meal-ingredients">🥣 70г геркулеса, 🥚 2 яйца С1, 🍎 половинка сезонного яблока.</div>
+          <div class="meal-macros">
+            <span style="color: var(--protein);">Б: 28г</span>
+            <span style="color: var(--fat);">Ж: 18г</span>
+            <span style="color: var(--carb);">У: 58г</span>
+          </div>
+        </div>
+
+        <!-- 2. Обед -->
+        <div class="meal-card" style="border-left: 3px solid #10b981;">
+          <div class="meal-header">
+            <span class="meal-tag" style="color: #10b981;">🍲 Обед · 13:30</span>
+            <span class="meal-cals">680 ккал</span>
+          </div>
+          <div class="meal-dish-name">Гречка ядрица с куриным филе и салатом</div>
+          <div class="meal-ingredients">🍗 200г филе грудки на пару/гриле, 🌾 80г сухой гречки, 🥒 свежий огурец.</div>
+          <div class="meal-macros">
+            <span style="color: var(--protein);">Б: 54г</span>
+            <span style="color: var(--fat);">Ж: 8г</span>
+            <span style="color: var(--carb);">У: 64г</span>
+          </div>
+        </div>
+
+        <!-- 3. Полдник -->
+        <div class="meal-card" style="border-left: 3px solid #38bdf8;">
+          <div class="meal-header">
+            <span class="meal-tag" style="color: #38bdf8;">🍎 Полдник · 17:00</span>
+            <span class="meal-cals">340 ккал</span>
+          </div>
+          <div class="meal-dish-name">Творожный десерт с яблоком и сыром</div>
+          <div class="meal-ingredients">🧀 150г творога 5%, 🍎 яблоко дольками, 🧀 25г сыра Тильзитер.</div>
+          <div class="meal-macros">
+            <span style="color: var(--protein);">Б: 30г</span>
+            <span style="color: var(--fat);">Ж: 16г</span>
+            <span style="color: var(--carb);">У: 18г</span>
+          </div>
+        </div>
+
+        <!-- 4. Ужин -->
+        <div class="meal-card" style="border-left: 3px solid #a855f7;">
+          <div class="meal-header">
+            <span class="meal-tag" style="color: #a855f7;">🥗 Ужин · 20:00</span>
+            <span class="meal-cals">600 ккал</span>
+          </div>
+          <div class="meal-dish-name">Куриная грудка с тушёными овощами</div>
+          <div class="meal-ingredients">🍗 180г куриного филе, 🥒 свежие огурцы и зелень с 1 ч.л. масла.</div>
+          <div class="meal-macros">
+            <span style="color: var(--protein);">Б: 44г</span>
+            <span style="color: var(--fat);">Ж: 12г</span>
+            <span style="color: var(--carb);">У: 12г</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
