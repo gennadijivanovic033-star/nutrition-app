@@ -423,6 +423,169 @@
       border-radius: 12px;
       text-align: center;
     }
+
+    /* ===================================== */
+    /* СТИЛИ КАТАЛОГА (ВСЕ РАЗДЕЛЫ ТОВАРОВ) */
+    /* ===================================== */
+    .catalog-search-bar {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 10px 14px;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .catalog-search-input {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 14px;
+      width: 100%;
+      outline: none;
+    }
+
+    .category-chips-scroll {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+      scrollbar-width: none;
+    }
+    .category-chips-scroll::-webkit-scrollbar { display: none; }
+
+    .cat-chip {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 8px 14px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--hint-color);
+      white-space: nowrap;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .cat-chip.active {
+      background: rgba(56, 189, 248, 0.16);
+      border-color: #38bdf8;
+      color: #38bdf8;
+    }
+
+    /* Сетка товаров */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .product-grid-card {
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .product-grid-card:active {
+      transform: scale(0.98);
+    }
+
+    .product-store-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-size: 9.5px;
+      font-weight: 800;
+      padding: 3px 6px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .badge-chizhik { background: rgba(250, 204, 21, 0.2); color: #facc15; border: 1px solid rgba(250, 204, 21, 0.3); }
+    .badge-pyaterochka { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .badge-magnit { background: rgba(244, 63, 94, 0.2); color: #f43f5e; border: 1px solid rgba(244, 63, 94, 0.3); }
+    .badge-perekrestok { background: rgba(34, 197, 94, 0.2); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); }
+
+    .product-icon-wrap {
+      font-size: 34px;
+      margin: 8px 0 6px 0;
+      text-align: center;
+    }
+
+    .product-card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-color);
+      line-height: 1.3;
+      min-height: 34px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .product-card-meta {
+      font-size: 10.5px;
+      color: var(--hint-color);
+      margin: 4px 0 8px 0;
+    }
+
+    .product-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 6px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .product-card-price {
+      font-size: 15px;
+      font-weight: 800;
+      color: #38bdf8;
+    }
+
+    .btn-add-cart {
+      background: #10b981;
+      border: none;
+      color: #fff;
+      font-weight: 700;
+      border-radius: 9px;
+      padding: 6px 10px;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-add-cart:active { transform: scale(0.92); }
+
+    /* Плашка корзины вверху каталога */
+    .catalog-cart-banner {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(56, 189, 248, 0.12));
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 14px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 700;
+    }
   </style>
 </head>
 <body>
@@ -598,15 +761,50 @@
     </div>
   </section>
 
-  <!-- РАЗДЕЛ 2: КАТАЛОГ -->
+  <!-- РАЗДЕЛ 2: КАТАЛОГ ВСЕХ ТОВАРОВ СУПЕРМАРКЕТОВ -->
   <section id="tab-catalog" class="tab-section">
-    <div class="card">
-      <div class="section-title">🥦 Каталог продуктов</div>
-      <div class="placeholder-box">
-        <div class="placeholder-icon">📦</div>
-        <div class="placeholder-title">Свежие продукты супермаркетов</div>
-        <div class="placeholder-desc">Здесь вы сможете выбирать любые любимые продукты по категориям (крупы, мясо/рыба, овощи, фрукты, молочка), на основе которых бот составит разнообразное меню на каждый день!</div>
+    <!-- Баннер выбранных продуктов для составления меню -->
+    <div class="catalog-cart-banner">
+      <div>
+        <span>🛒 Выбрано для меню: </span>
+        <strong id="catalogSelectedCount" style="color: #38bdf8;">0 шт.</strong>
       </div>
+      <span id="catalogSelectedSum" style="color: #10b981;">0 ₽</span>
+    </div>
+
+    <!-- Поиск по каталогу -->
+    <div class="catalog-search-bar">
+      <span style="font-size: 16px;">🔍</span>
+      <input type="text" id="catalogSearch" class="catalog-search-input" placeholder="Поиск (шоколад, пельмени, яблоки, сыр)..." oninput="filterCatalog()">
+    </div>
+
+    <!-- Горизонтальные фильтры всех категорий товаров -->
+    <div class="category-chips-scroll" id="catChipsContainer">
+      <div class="cat-chip active" data-cat="all" onclick="selectCatalogCategory(this, 'all')">✨ Все товары</div>
+      <div class="cat-chip" data-cat="meat" onclick="selectCatalogCategory(this, 'meat')">🥩 Мясо и птица</div>
+      <div class="cat-chip" data-cat="fish" onclick="selectCatalogCategory(this, 'fish')">🐟 Рыба и море</div>
+      <div class="cat-chip" data-cat="dairy" onclick="selectCatalogCategory(this, 'dairy')">🥛 Молоко, сыр, яйца</div>
+      <div class="cat-chip" data-cat="veg" onclick="selectCatalogCategory(this, 'veg')">🥦 Овощи и зелень</div>
+      <div class="cat-chip" data-cat="fruits" onclick="selectCatalogCategory(this, 'fruits')">🍎 Фрукты и ягоды</div>
+      <div class="cat-chip" data-cat="bakery" onclick="selectCatalogCategory(this, 'bakery')">🍞 Хлеб и выпечка</div>
+      <div class="cat-chip" data-cat="grocery" onclick="selectCatalogCategory(this, 'grocery')">🌾 Крупы и макароны</div>
+      <div class="cat-chip" data-cat="frozen" onclick="selectCatalogCategory(this, 'frozen')">🥟 Пельмени и заморозка</div>
+      <div class="cat-chip" data-cat="sweets" onclick="selectCatalogCategory(this, 'sweets')">🍫 Сладости и снеки</div>
+      <div class="cat-chip" data-cat="drinks" onclick="selectCatalogCategory(this, 'drinks')">🧃 Напитки и соки</div>
+    </div>
+
+    <!-- Фильтр по магазинам (Пятёрочка, Магнит, Перекрёсток, Чижик) -->
+    <div style="display: flex; gap: 6px; margin-bottom: 12px; overflow-x: auto; scrollbar-width: none;">
+      <div class="chip active" style="padding: 6px 10px; font-size: 11.5px;" data-store-filter="all" onclick="filterByStore(this, 'all')">Все сети</div>
+      <div class="chip" style="padding: 6px 10px; font-size: 11.5px;" data-store-filter="chizhik" onclick="filterByStore(this, 'chizhik')">🟡 Чижик</div>
+      <div class="chip" style="padding: 6px 10px; font-size: 11.5px;" data-store-filter="pyaterochka" onclick="filterByStore(this, 'pyaterochka')">🔴 Пятёрочка</div>
+      <div class="chip" style="padding: 6px 10px; font-size: 11.5px;" data-store-filter="magnit" onclick="filterByStore(this, 'magnit')">🟥 Магнит</div>
+      <div class="chip" style="padding: 6px 10px; font-size: 11.5px;" data-store-filter="perekrestok" onclick="filterByStore(this, 'perekrestok')">🟢 Перекрёсток</div>
+    </div>
+
+    <!-- Сетка товаров каталога -->
+    <div class="products-grid" id="catalogGrid">
+      <!-- Наполняется скриптом renderFullCatalog() -->
     </div>
   </section>
 
@@ -700,6 +898,158 @@
       // Обновляем шапку
       document.getElementById('screenTitle').innerText = title;
       document.getElementById('screenSubtitle').innerText = subtitle;
+
+      if (tabKey === 'catalog') {
+        renderFullCatalog();
+      }
+    }
+
+    // ==============================================
+    // БАЗА ВСЕХ ТОВАРОВ (ЧИЖИК, ПЯТЁРОЧКА, МАГНИТ, ПЕРЕКРЁСТОК)
+    // ==============================================
+    const FULL_CATALOG = [
+      // 1. Мясо и птица
+      { id: 101, name: "Куриное филе охлажденное Вернер", cat: "meat", store: "chizhik", price: 299, weight: 800, cal: 110, p: 23, f: 2, c: 0, icon: "🍗" },
+      { id: 102, name: "Филе грудки цыпленка Петелинка", cat: "meat", store: "pyaterochka", price: 369, weight: 850, cal: 113, p: 24, f: 2, c: 0, icon: "🍗" },
+      { id: 103, name: "Фарш домашний говядина/свинина", cat: "meat", store: "magnit", price: 199, weight: 400, cal: 260, p: 15, f: 22, c: 0, icon: "🥩" },
+      { id: 104, name: "Стейк из индейки Пава-Пава", cat: "meat", store: "perekrestok", price: 329, weight: 500, cal: 120, p: 21, f: 4, c: 0, icon: "🥩" },
+
+      // 2. Рыба и море
+      { id: 201, name: "Минтай филе Дикое Море", cat: "fish", store: "chizhik", price: 189, weight: 600, cal: 72, p: 16, f: 1, c: 0, icon: "🐟" },
+      { id: 202, name: "Стейк лосося охлажденный", cat: "fish", store: "perekrestok", price: 699, weight: 400, cal: 198, p: 20, f: 13, c: 0, icon: "🍣" },
+      { id: 203, name: "Сельдь слабосоленая филе-кусочки", cat: "fish", store: "magnit", price: 139, weight: 250, cal: 210, p: 17, f: 16, c: 0, icon: "🐟" },
+
+      // 3. Молоко, сыр, яйца
+      { id: 301, name: "Яйца куриные С1 Щедрый Год (10 шт)", cat: "dairy", store: "chizhik", price: 99, weight: 550, cal: 157, p: 13, f: 11, c: 1, icon: "🥚" },
+      { id: 302, name: "Творог Светаево 5%", cat: "dairy", store: "chizhik", price: 79, weight: 200, cal: 121, p: 16, f: 5, c: 3, icon: "🧀" },
+      { id: 303, name: "Молоко Светаево 3.2% пастеризованное", cat: "dairy", store: "chizhik", price: 64, weight: 900, cal: 60, p: 3, f: 3, c: 5, icon: "🥛" },
+      { id: 304, name: "Сыр Российский Светаево 45%", cat: "dairy", store: "chizhik", price: 149, weight: 250, cal: 340, p: 24, f: 27, c: 0, icon: "🧀" },
+      { id: 305, name: "Масло сливочное Традиционное 82.5%", cat: "dairy", store: "pyaterochka", price: 179, weight: 180, cal: 748, p: 1, f: 82, c: 1, icon: "🧈" },
+
+      // 4. Овощи и зелень
+      { id: 401, name: "Огурцы среднеплодные свежие", cat: "veg", store: "chizhik", price: 89, weight: 600, cal: 14, p: 1, f: 0, c: 3, icon: "🥒" },
+      { id: 402, name: "Томаты на ветке сочные", cat: "veg", store: "magnit", price: 139, weight: 600, cal: 20, p: 1, f: 0, c: 4, icon: "🍅" },
+      { id: 403, name: "Картофель отборный свежий", cat: "veg", store: "chizhik", price: 39, weight: 1500, cal: 77, p: 2, f: 0, c: 16, icon: "🥔" },
+      { id: 404, name: "Капуста белокочанная молодая", cat: "veg", store: "pyaterochka", price: 45, weight: 1200, cal: 27, p: 2, f: 0, c: 5, icon: "🥬" },
+
+      // 5. Фрукты и ягоды
+      { id: 501, name: "Бананы спелые Эквадор", cat: "fruits", store: "chizhik", price: 119, weight: 1000, cal: 89, p: 1, f: 0, c: 22, icon: "🍌" },
+      { id: 502, name: "Яблоки сезонные красные", cat: "fruits", store: "magnit", price: 99, weight: 1000, cal: 47, p: 0, f: 0, c: 10, icon: "🍎" },
+      { id: 503, name: "Мандарины сладкие без косточек", cat: "fruits", store: "perekrestok", price: 159, weight: 800, cal: 38, p: 1, f: 0, c: 8, icon: "🍊" },
+
+      // 6. Хлеб и выпечка
+      { id: 601, name: "Хлеб Бородинский подовый", cat: "bakery", store: "chizhik", price: 34, weight: 400, cal: 208, p: 7, f: 1, c: 41, icon: "🍞" },
+      { id: 602, name: "Батон нарезной Коломенский", cat: "bakery", store: "pyaterochka", price: 39, weight: 400, cal: 260, p: 8, f: 3, c: 50, icon: "🥖" },
+      { id: 603, name: "Круассаны с шоколадной начинкой (4 шт)", cat: "bakery", store: "perekrestok", price: 129, weight: 220, cal: 410, p: 6, f: 22, c: 47, icon: "🥐" },
+
+      // 7. Крупы и макароны
+      { id: 701, name: "Гречневая крупа ядрица Щедрый Год", cat: "grocery", store: "chizhik", price: 59, weight: 800, cal: 313, p: 13, f: 3, c: 62, icon: "🌾" },
+      { id: 702, name: "Овсяные хлопья Геркулес", cat: "grocery", store: "chizhik", price: 49, weight: 500, cal: 352, p: 12, f: 6, c: 62, icon: "🥣" },
+      { id: 703, name: "Макароны перья из твердых сортов Barilla", cat: "grocery", store: "perekrestok", price: 99, weight: 450, cal: 350, p: 13, f: 2, c: 71, icon: "🍝" },
+      { id: 704, name: "Рис круглозерный шлифованный", cat: "grocery", store: "magnit", price: 79, weight: 800, cal: 340, p: 7, f: 1, c: 77, icon: "🍚" },
+
+      // 8. Пельмени и заморозка (Обычная вкусная еда)
+      { id: 801, name: "Пельмени Гранд Меню Сибирские", cat: "frozen", store: "chizhik", price: 199, weight: 800, cal: 275, p: 11, f: 15, c: 24, icon: "🥟" },
+      { id: 802, name: "Наггетсы куриные сочные Вязанка", cat: "frozen", store: "pyaterochka", price: 149, weight: 300, cal: 230, p: 12, f: 11, c: 20, icon: "🍗" },
+      { id: 803, name: "Пицца Четыре сыра замороженная Ristorante", cat: "frozen", store: "perekrestok", price: 349, weight: 340, cal: 280, p: 10, f: 14, c: 28, icon: "🍕" },
+
+      // 9. Сладости и снеки
+      { id: 901, name: "Шоколад Ritter Sport Молочный с орехом", cat: "sweets", store: "chizhik", price: 119, weight: 100, cal: 550, p: 8, f: 34, c: 53, icon: "🍫" },
+      { id: 902, name: "Печенье Овсяное традиционное", cat: "sweets", store: "magnit", price: 69, weight: 300, cal: 420, p: 6, f: 15, c: 65, icon: "🍪" },
+      { id: 903, name: "Чипсы картофельные Lay's Сметана и зелень", cat: "sweets", store: "pyaterochka", price: 129, weight: 140, cal: 510, p: 6, f: 30, c: 53, icon: "🥔" },
+
+      // 10. Напитки
+      { id: 1001, name: "Сок Добрый Апельсин 100%", cat: "drinks", store: "chizhik", price: 99, weight: 1000, cal: 46, p: 0, f: 0, c: 12, icon: "🧃" },
+      { id: 1002, name: "Вода минеральная Святой Источник б/газа", cat: "drinks", store: "pyaterochka", price: 39, weight: 1500, cal: 0, p: 0, f: 0, c: 0, icon: "💧" }
+    ];
+
+    let currentCatFilter = 'all';
+    let currentStoreFilter = 'all';
+    let selectedProductsMap = {}; // { id: qty }
+
+    function selectCatalogCategory(el, catKey) {
+      triggerHaptic();
+      document.querySelectorAll('#catChipsContainer .cat-chip').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      currentCatFilter = catKey;
+      renderFullCatalog();
+    }
+
+    function filterByStore(el, storeKey) {
+      triggerHaptic();
+      document.querySelectorAll('[data-store-filter]').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      currentStoreFilter = storeKey;
+      renderFullCatalog();
+    }
+
+    function filterCatalog() {
+      renderFullCatalog();
+    }
+
+    function renderFullCatalog() {
+      const grid = document.getElementById('catalogGrid');
+      if (!grid) return;
+
+      const query = (document.getElementById('catalogSearch')?.value || '').toLowerCase().trim();
+
+      const filtered = FULL_CATALOG.filter(item => {
+        const matchCat = (currentCatFilter === 'all' || item.cat === currentCatFilter);
+        const matchStore = (currentStoreFilter === 'all' || item.store === currentStoreFilter);
+        const matchSearch = (!query || item.name.toLowerCase().includes(query));
+        return matchCat && matchStore && matchSearch;
+      });
+
+      grid.innerHTML = '';
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div style="grid-column: span 2; text-align: center; color: var(--hint-color); padding: 30px;">Ничего не найдено в этой категории 🔍</div>';
+        return;
+      }
+
+      const storeNames = { chizhik: 'Чижик', pyaterochka: 'Пятёрочка', magnit: 'Магнит', perekrestok: 'Перекрёсток' };
+
+      filtered.forEach(p => {
+        const inCartQty = selectedProductsMap[p.id] || 0;
+        const card = document.createElement('div');
+        card.className = 'product-grid-card';
+        card.innerHTML = `
+          <div class="product-store-badge badge-${p.store}">${storeNames[p.store]}</div>
+          <div class="product-icon-wrap">${p.icon}</div>
+          <div class="product-card-title">${p.name}</div>
+          <div class="product-card-meta">${p.weight}г · Б:${p.p}г Ж:${p.f}г У:${p.c}г</div>
+          <div class="product-card-footer">
+            <div class="product-card-price">${p.price} ₽</div>
+            <button class="btn-add-cart" onclick="toggleCatalogItem(${p.id})">
+              ${inCartQty > 0 ? `✅ ${inCartQty} шт` : `+ В меню`}
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      updateCatalogBanner();
+    }
+
+    function toggleCatalogItem(id) {
+      triggerHaptic();
+      selectedProductsMap[id] = (selectedProductsMap[id] || 0) + 1;
+      renderFullCatalog();
+    }
+
+    function updateCatalogBanner() {
+      let count = 0;
+      let sum = 0;
+      for (const [id, qty] of Object.entries(selectedProductsMap)) {
+        const prod = FULL_CATALOG.find(p => p.id == id);
+        if (prod && qty > 0) {
+          count += qty;
+          sum += prod.price * qty;
+        }
+      }
+      const countEl = document.getElementById('catalogSelectedCount');
+      const sumEl = document.getElementById('catalogSelectedSum');
+      if (countEl) countEl.innerText = count + ' шт.';
+      if (sumEl) sumEl.innerText = sum.toLocaleString() + ' ₽';
     }
 
     // ==============================================
