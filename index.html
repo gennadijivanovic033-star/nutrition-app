@@ -482,6 +482,93 @@
       background: rgba(56, 189, 248, 0.2);
       color: #38bdf8;
     }
+
+    /* Раздел 4: Шкала экономии и умный бюджет */
+    .budget-preset-pills {
+      display: flex;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .preset-pill {
+      flex: 1;
+      padding: 7px 4px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      font-size: 11.5px;
+      font-weight: 700;
+      text-align: center;
+      cursor: pointer;
+      color: var(--text-color);
+      transition: all 0.15s ease;
+    }
+
+    .preset-pill.active {
+      background: rgba(16, 185, 129, 0.18);
+      border-color: #10b981;
+      color: #10b981;
+    }
+
+    .economy-meter-wrap {
+      margin-top: 16px;
+    }
+
+    .meter-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12.5px;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .meter-bar {
+      height: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 99px;
+      overflow: hidden;
+      display: flex;
+    }
+
+    .meter-spent {
+      background: linear-gradient(90deg, #38bdf8, #10b981);
+      width: 80%;
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+
+    .meter-remains {
+      background: rgba(255, 255, 255, 0.15);
+      flex: 1;
+      height: 100%;
+    }
+
+    .suggestion-box {
+      margin-top: 14px;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px dashed rgba(56, 189, 248, 0.3);
+      border-radius: 14px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .suggestion-icon {
+      font-size: 26px;
+    }
+
+    .suggestion-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+
+    .suggestion-desc {
+      font-size: 11.5px;
+      color: var(--hint-color);
+      margin-top: 2px;
+    }
   </style>
 </head>
 <body>
@@ -661,11 +748,57 @@
   <!-- РАЗДЕЛ 4: Интерактивная «Шкала экономии» под бюджетом -->
   <section id="tab-economy" class="tab-section">
     <div class="card">
-      <div class="section-title">Раздел 4: Шкала экономии</div>
-      <div class="placeholder-box">
-        <div class="placeholder-icon">📊</div>
-        <div class="placeholder-title">Умный бюджет & Экономия</div>
-        <div class="placeholder-desc">Здесь появится умная шкала оставшихся средств с подсказками: «Осталось 120 ₽ — можно добавить яблоки!».</div>
+      <div class="section-title" style="display: flex; justify-content: space-between;">
+        <span>💰 Лимит бюджета & Экономия</span>
+        <span id="economyBudgetText" style="color: #10b981; font-weight: 800;">1 500 ₽</span>
+      </div>
+
+      <!-- Быстрые пресеты бюджета в 1 клик -->
+      <div class="budget-preset-pills">
+        <div class="preset-pill" onclick="applyPresetBudget(1000)">1 000 ₽</div>
+        <div class="preset-pill active" onclick="applyPresetBudget(1500)">1 500 ₽</div>
+        <div class="preset-pill" onclick="applyPresetBudget(2500)">2 500 ₽</div>
+        <div class="preset-pill" onclick="applyPresetBudget(4000)">4 000 ₽</div>
+      </div>
+
+      <!-- Шкала экономии -->
+      <div class="economy-meter-wrap">
+        <div class="meter-labels">
+          <span>Сумма покупок: <strong id="spentVal" style="color: #38bdf8;">1 380 ₽</strong></span>
+          <span>Остаток: <strong id="leftVal" style="color: #10b981;">+120 ₽</strong></span>
+        </div>
+        <div class="meter-bar">
+          <div class="meter-spent" id="meterSpentBar" style="width: 92%;"></div>
+          <div class="meter-remains"></div>
+        </div>
+      </div>
+
+      <!-- Умная рекомендация по остатку -->
+      <div class="suggestion-box">
+        <div class="suggestion-icon">🍏</div>
+        <div>
+          <div class="suggestion-title" id="sugTitle">Осталось 120 ₽!</div>
+          <div class="suggestion-desc" id="sugDesc">
+            Этих денег как раз хватит на 1 кг сезонных яблок или пучок свежей зелени для идеальной клетчатки.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Статистика выгоды -->
+    <div class="card">
+      <div class="section-title">📊 Эффективность на 1 рубль</div>
+      <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
+        <span style="color: var(--hint-color);">Цена 100г белка:</span>
+        <span style="font-weight: 700; color: #f8fafc;">~ 88 ₽</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
+        <span style="color: var(--hint-color);">Стоимость дня питания:</span>
+        <span style="font-weight: 700; color: #10b981;">~ 460 ₽ / день</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 13px;">
+        <span style="color: var(--hint-color);">Экономия относительно доставок:</span>
+        <span style="font-weight: 700; color: #38bdf8;">~ 65% выгоды</span>
       </div>
     </div>
   </section>
@@ -757,6 +890,65 @@
         renderRings();
       } else if (tabKey === 'showcase') {
         renderShowcase();
+      } else if (tabKey === 'economy') {
+        renderEconomy();
+      }
+    }
+
+    // Состояние бюджета и экономии (Раздел 4)
+    let currentBudgetLimit = 1500;
+
+    function applyPresetBudget(val) {
+      triggerHaptic();
+      currentBudgetLimit = val;
+      document.querySelectorAll('.preset-pill').forEach(p => {
+        p.classList.toggle('active', p.innerText.includes(val.toLocaleString()));
+      });
+      renderEconomy();
+    }
+
+    function renderEconomy() {
+      // Суммируем актуальную стоимость из витрины
+      let spent = 0;
+      showcaseItems.forEach(it => { spent += it.price * it.qty; });
+
+      const budgetEl = document.getElementById('economyBudgetText');
+      if (budgetEl) budgetEl.innerText = currentBudgetLimit.toLocaleString() + ' ₽';
+
+      const spentEl = document.getElementById('spentVal');
+      if (spentEl) spentEl.innerText = spent.toLocaleString() + ' ₽';
+
+      const diff = currentBudgetLimit - spent;
+      const leftEl = document.getElementById('leftVal');
+      const sugTitle = document.getElementById('sugTitle');
+      const sugDesc = document.getElementById('sugDesc');
+      const bar = document.getElementById('meterSpentBar');
+
+      const pct = Math.min(Math.max((spent / currentBudgetLimit) * 100, 5), 100);
+      if (bar) bar.style.width = pct + '%';
+
+      if (diff >= 0) {
+        if (leftEl) {
+          leftEl.innerText = '+' + diff.toLocaleString() + ' ₽';
+          leftEl.style.color = '#10b981';
+        }
+        if (sugTitle) sugTitle.innerText = `Осталось ${diff.toLocaleString()} ₽!`;
+        if (sugDesc) {
+          if (diff >= 150) {
+            sugDesc.innerText = 'Отличный резерв! Можно добавить упаковку сезонных фруктов или пачку полезных семян чиа.';
+          } else if (diff >= 70) {
+            sugDesc.innerText = 'Этих денег как раз хватит на пучок свежей зелени или дополнительную пачку Геркулеса.';
+          } else {
+            sugDesc.innerText = 'Корзина заполнена ювелирно! Бюджет использован с максимальной пользой.';
+          }
+        }
+      } else {
+        if (leftEl) {
+          leftEl.innerText = diff.toLocaleString() + ' ₽';
+          leftEl.style.color = '#f43f5e';
+        }
+        if (sugTitle) sugTitle.innerText = `Превышение на ${Math.abs(diff)} ₽`;
+        if (sugDesc) sugDesc.innerText = 'Попробуйте заменить курицу на минтай или убрать 1 позицию сыра в Разделе 3.';
       }
     }
 
