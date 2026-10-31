@@ -355,6 +355,133 @@
       color: var(--hint-color);
       margin-top: 2px;
     }
+
+    /* Раздел 3: E-commerce Продуктовые карточки */
+    .catalog-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .product-row-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .product-row-card:active {
+      transform: scale(0.99);
+    }
+
+    .product-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .product-main-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .product-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-color);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .product-meta {
+      font-size: 11px;
+      color: var(--hint-color);
+      margin-top: 2px;
+    }
+
+    .product-price-block {
+      text-align: right;
+      margin-right: 4px;
+    }
+
+    .product-single-price {
+      font-size: 14px;
+      font-weight: 800;
+      color: #38bdf8;
+    }
+
+    .product-single-weight {
+      font-size: 10px;
+      color: var(--hint-color);
+    }
+
+    /* Степпер количества: [-] 1 [+] */
+    .stepper {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 2px;
+      gap: 4px;
+    }
+
+    .stepper-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: var(--text-color);
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .stepper-btn:active {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .stepper-qty {
+      font-size: 13px;
+      font-weight: 700;
+      min-width: 18px;
+      text-align: center;
+    }
+
+    /* Кнопка быстрой замены */
+    .swap-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--hint-color);
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .swap-btn:active {
+      background: rgba(56, 189, 248, 0.2);
+      color: #38bdf8;
+    }
   </style>
 </head>
 <body>
@@ -518,12 +645,15 @@
 
   <!-- РАЗДЕЛ 3: Карточки товаров в стиле продуктовых витрин (E-commerce UI) -->
   <section id="tab-showcase" class="tab-section">
-    <div class="card">
-      <div class="section-title">Раздел 3: Витрина продуктов</div>
-      <div class="placeholder-box">
-        <div class="placeholder-icon">🛒</div>
-        <div class="placeholder-title">Продуктовые карточки</div>
-        <div class="placeholder-desc">Здесь будет витрина товаров супермаркета с иконками категорий, кнопками «+ / −» и заменой продуктов.</div>
+    <div class="card" style="padding-bottom: 8px;">
+      <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
+        <span>🛒 Корзина супермаркета</span>
+        <span id="showcaseTotalCost" style="color: #10b981; font-weight: 800; font-size: 15px;">1 460 ₽</span>
+      </div>
+
+      <!-- Список интерактивных карточек товаров -->
+      <div class="catalog-list" id="productsCatalogContainer">
+        <!-- Генерируется динамически через renderCatalog() -->
       </div>
     </div>
   </section>
@@ -625,7 +755,72 @@
 
       if (tabKey === 'rings') {
         renderRings();
+      } else if (tabKey === 'showcase') {
+        renderShowcase();
       }
+    }
+
+    // Состояние корзины витрины (Раздел 3)
+    let showcaseItems = [
+      { id: 1, name: "Филе грудки цыпленка", icon: "🍗", price: 369, weight: 850, p: 23, f: 2, c: 0, qty: 1, alt: "Филе индейки" },
+      { id: 2, name: "Яйца куриные С1 (10 шт)", icon: "🥚", price: 119, weight: 550, p: 13, f: 11, c: 1, qty: 2, alt: "Яйца перепелиные" },
+      { id: 3, name: "Творог рассыпчатый 5%", icon: "🧀", price: 99, weight: 200, p: 16, f: 5, c: 3, qty: 2, alt: "Греческий йогурт" },
+      { id: 4, name: "Крупа гречневая ядрица", icon: "🌾", price: 79, weight: 800, p: 13, f: 3, c: 62, qty: 1, alt: "Рис бурый" },
+      { id: 5, name: "Овсяные хлопья Геркулес", icon: "🥣", price: 69, weight: 500, p: 12, f: 6, c: 62, qty: 1, alt: "Хлопья 4 злака" },
+      { id: 6, name: "Огурцы среднеплодные", icon: "🥒", price: 129, weight: 600, p: 1, f: 0, c: 3, qty: 1, alt: "Томаты на ветке" },
+      { id: 7, name: "Сыр Тильзитер 45%", icon: "🧀", price: 189, weight: 200, p: 25, f: 26, c: 0, qty: 1, alt: "Сыр легкий 15%" },
+      { id: 8, name: "Яблоки красные сезонные", icon: "🍎", price: 119, weight: 1000, p: 0, f: 0, c: 10, qty: 1, alt: "Бананы свежие" }
+    ];
+
+    function renderShowcase() {
+      const container = document.getElementById('productsCatalogContainer');
+      if (!container) return;
+
+      container.innerHTML = '';
+      let total = 0;
+
+      showcaseItems.forEach((item, idx) => {
+        total += item.price * item.qty;
+        const card = document.createElement('div');
+        card.className = 'product-row-card';
+        card.innerHTML = `
+          <div class="product-avatar">${item.icon}</div>
+          <div class="product-main-info">
+            <div class="product-title">${item.name}</div>
+            <div class="product-meta">${item.weight}г · Б: ${item.p}г · Ж: ${item.f}г · У: ${item.c}г</div>
+          </div>
+          <div class="product-price-block">
+            <div class="product-single-price">${item.price * item.qty} ₽</div>
+            <div class="product-single-weight">${item.price} ₽/шт</div>
+          </div>
+          <div class="stepper">
+            <button class="stepper-btn" onclick="changeQty(${idx}, -1)">−</button>
+            <span class="stepper-qty">${item.qty}</span>
+            <button class="stepper-btn" onclick="changeQty(${idx}, 1)">+</button>
+          </div>
+          <button class="swap-btn" title="Заменить на аналог" onclick="swapProduct(${idx})">🔁</button>
+        `;
+        container.appendChild(card);
+      });
+
+      const totalBadge = document.getElementById('showcaseTotalCost');
+      if (totalBadge) totalBadge.innerText = total.toLocaleString() + ' ₽';
+    }
+
+    function changeQty(idx, delta) {
+      triggerHaptic();
+      showcaseItems[idx].qty += delta;
+      if (showcaseItems[idx].qty < 1) showcaseItems[idx].qty = 1;
+      renderShowcase();
+    }
+
+    function swapProduct(idx) {
+      triggerHaptic();
+      const current = showcaseItems[idx];
+      const oldName = current.name;
+      current.name = current.alt;
+      current.alt = oldName;
+      renderShowcase();
     }
 
     // Рендер и анимация колец КБЖУ (Раздел 2)
