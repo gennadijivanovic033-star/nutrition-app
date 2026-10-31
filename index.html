@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Smart Nutrition Basket</title>
+  <title>Smart Nutrition TMA</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     :root {
-      --bg-color: var(--tg-theme-bg-color, #0f172a);
+      --bg-color: var(--tg-theme-bg-color, #0b1120);
       --card-bg: var(--tg-theme-secondary-bg-color, #1e293b);
       --text-color: var(--tg-theme-text-color, #f8fafc);
       --hint-color: var(--tg-theme-hint-color, #94a3b8);
-      --button-color: var(--tg-theme-button-color, #22c55e);
+      --button-color: var(--tg-theme-button-color, #10b981);
       --button-text: var(--tg-theme-button-text-color, #ffffff);
       --accent: #38bdf8;
       --protein: #f43f5e;
@@ -24,119 +24,103 @@
       margin: 0;
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
       background: var(--bg-color);
       color: var(--text-color);
       padding: 16px;
-      padding-bottom: 90px;
+      padding-bottom: 96px; /* Отступ под плавающий док-бар */
+      min-height: 100vh;
     }
 
+    /* Верхний хедер */
     .header {
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       text-align: center;
     }
 
     .header h1 {
-      font-size: 22px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
     }
 
     .header p {
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--hint-color);
-      margin-top: 4px;
+      margin-top: 3px;
+    }
+
+    /* Карточки разделов */
+    .tab-section {
+      display: none;
+      animation: fadeIn 0.25s ease forwards;
+    }
+
+    .tab-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .card {
       background: var(--card-bg);
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 16px;
       margin-bottom: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.2);
     }
 
     .section-title {
-      font-size: 14px;
+      font-size: 13px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
       color: var(--hint-color);
       margin-bottom: 12px;
-      font-weight: 600;
-    }
-
-    .macro-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-top: 10px;
-    }
-
-    .macro-box {
-      background: rgba(255, 255, 255, 0.04);
-      padding: 10px;
-      border-radius: 12px;
-      text-align: center;
-    }
-
-    .macro-label {
-      font-size: 11px;
-      color: var(--hint-color);
-    }
-
-    .macro-value {
-      font-size: 15px;
       font-weight: 700;
-      margin-top: 2px;
     }
 
-    .val-protein { color: var(--protein); }
-    .val-fat { color: var(--fat); }
-    .val-carb { color: var(--carb); }
-
-    .cal-bar-wrap {
-      margin-top: 12px;
+    /* Временные плейсхолдеры для разделов */
+    .placeholder-box {
+      border: 2px dashed rgba(255, 255, 255, 0.14);
+      border-radius: 14px;
+      padding: 24px 16px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.02);
     }
-    .cal-bar-info {
-      display: flex;
-      justify-content: space-between;
+
+    .placeholder-icon {
+      font-size: 34px;
+      margin-bottom: 8px;
+    }
+
+    .placeholder-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-color);
+      margin-bottom: 4px;
+    }
+
+    .placeholder-desc {
       font-size: 13px;
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-    .progress-bar {
-      height: 8px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 99px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #22c55e, #38bdf8);
-      width: 0%;
-      transition: width 0.3s ease;
+      color: var(--hint-color);
+      line-height: 1.4;
     }
 
+    /* Стили текущего калькулятора (Раздел 1) */
     .form-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 12px;
     }
-
-    .form-row:last-child {
-      margin-bottom: 0;
-    }
-
-    label {
-      font-size: 14px;
-      color: var(--text-color);
-    }
+    .form-row:last-child { margin-bottom: 0; }
 
     select, input[type="range"] {
       background: #1e293b;
@@ -147,30 +131,68 @@
       font-size: 14px;
       outline: none;
     }
+    select option { background-color: #1e293b; color: #f8fafc; }
+    .budget-slider-val { font-weight: 800; color: var(--button-color); font-size: 16px; }
 
-    select {
-      max-width: 170px;
-      cursor: pointer;
+    /* Док-бар с 6 разделами */
+    .dock-container {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      max-width: 480px;
+      margin: 0 auto;
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 22px;
+      padding: 6px 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 999;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), 0 0 1px 1px rgba(255, 255, 255, 0.08) inset;
     }
 
-    select option {
-      background-color: #1e293b;
-      color: #f8fafc;
-      padding: 8px 10px;
-    }
-
-    .budget-slider-val {
-      font-weight: 700;
-      color: var(--button-color);
-      font-size: 16px;
-    }
-
-    .item-list {
+    .dock-item {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 2px;
+      border-radius: 14px;
+      cursor: pointer;
+      color: var(--hint-color);
+      text-decoration: none;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
     }
 
+    .dock-item:active {
+      transform: scale(0.92);
+    }
+
+    .dock-item.active {
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+    }
+
+    .dock-icon {
+      font-size: 19px;
+      line-height: 1;
+      margin-bottom: 3px;
+    }
+
+    .dock-text {
+      font-size: 9.5px;
+      font-weight: 600;
+      white-space: nowrap;
+      letter-spacing: -0.1px;
+    }
+
+    /* Карточки в списке товаров */
     .item-card {
       display: flex;
       justify-content: space-between;
@@ -179,224 +201,143 @@
       padding: 10px 12px;
       border-radius: 12px;
       border-left: 3px solid var(--accent);
-    }
-
-    .item-name {
-      font-size: 13.5px;
-      font-weight: 600;
-      max-width: 190px;
-      line-height: 1.3;
-    }
-
-    .item-sub {
-      font-size: 11px;
-      color: var(--hint-color);
-      margin-top: 2px;
-    }
-
-    .item-price {
-      text-align: right;
-    }
-
-    .item-cost {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--button-color);
-    }
-
-    .item-qty {
-      font-size: 11px;
-      color: var(--hint-color);
-    }
-
-    /* Floating Glassmorphism Dock Bar */
-    .bottom-bar {
-      position: fixed;
-      bottom: 12px;
-      left: 12px;
-      right: 12px;
-      max-width: 480px;
-      margin: 0 auto;
-      background: rgba(30, 41, 59, 0.78);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 20px;
-      padding: 8px 12px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      z-index: 100;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 0 1px 1px rgba(255, 255, 255, 0.08) inset;
-    }
-
-    .dock-info {
-      display: flex;
-      flex-direction: column;
-      padding-left: 4px;
-    }
-
-    .dock-label {
-      font-size: 11px;
-      color: var(--hint-color);
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-      font-weight: 600;
-    }
-
-    .dock-cost {
-      font-size: 17px;
-      font-weight: 800;
-      color: #38bdf8;
-      letter-spacing: -0.2px;
-    }
-
-    .btn {
-      padding: 12px 16px;
-      border-radius: 14px;
-      border: none;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      text-decoration: none;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .btn:active {
-      transform: scale(0.96);
-    }
-
-    .btn-icon {
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--text-color);
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .btn-icon:hover {
-      background: rgba(255, 255, 255, 0.14);
-    }
-
-    .btn-primary {
-      flex: 1;
-      height: 44px;
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      color: #ffffff;
-      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.38);
-    }
-
-    .btn-primary:hover {
-      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.5);
+      margin-bottom: 8px;
     }
   </style>
 </head>
 <body>
 
+  <!-- Верхняя шапка -->
   <div class="header">
-    <h1>🥗 Smart Nutrition</h1>
-    <p>Баланс КБЖУ под ваш бюджет в супермаркетах</p>
+    <h1 id="screenTitle">🏷 Выбор & Чипсы</h1>
+    <p id="screenSubtitle">Раздел 1: Быстрый выбор параметров</p>
   </div>
 
-  <div class="card">
-    <div class="section-title">⚙️ Настройки и бюджет</div>
-    
-    <div class="form-row">
-      <label>💰 Бюджет:</label>
-      <div style="text-align: right;">
-        <span class="budget-slider-val" id="budgetDisplay">1500 ₽</span>
-        <br>
-        <input type="range" id="budgetInput" min="500" max="7000" step="100" value="1500" style="width: 140px;" oninput="updateBudget(this.value)">
+  <!-- РАЗДЕЛ 1: Замена выпадающих списков на интерактивные «Чипсы» и табы -->
+  <section id="tab-chips" class="tab-section active">
+    <div class="card">
+      <div class="section-title">Раздел 1: Настройки & Чипсы</div>
+      <div class="form-row">
+        <label>💰 Бюджет:</label>
+        <div style="text-align: right;">
+          <span class="budget-slider-val" id="budgetDisplay">1500 ₽</span><br>
+          <input type="range" id="budgetInput" min="500" max="7000" step="100" value="1500" style="width: 130px;" oninput="updateBudget(this.value)">
+        </div>
+      </div>
+      <div class="form-row">
+        <label>🎯 Цель:</label>
+        <select id="goalSelect" onchange="calculateBasket()">
+          <option value="weight_loss">📉 Похудение</option>
+          <option value="maintenance" selected>⚖️ Поддержание</option>
+          <option value="muscle_gain">💪 Набор массы</option>
+          <option value="student_budget">💰 Студент-Эконом</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>🏪 Магазин:</label>
+        <select id="storeSelect" onchange="calculateBasket()">
+          <option value="pyaterochka" selected>🔴 Пятёрочка</option>
+          <option value="magnit">🟥 Магнит</option>
+          <option value="perekrestok">🟢 Перекрёсток</option>
+        </select>
       </div>
     </div>
-
-    <div class="form-row">
-      <label>🎯 Цель:</label>
-      <select id="goalSelect" onchange="calculateBasket()">
-        <option value="weight_loss">📉 Похудение</option>
-        <option value="maintenance" selected>⚖️ Поддержание</option>
-        <option value="muscle_gain">💪 Набор массы</option>
-        <option value="student_budget">💰 Студент-Эконом</option>
-      </select>
-    </div>
-
-    <div class="form-row">
-      <label>⏱ Срок:</label>
-      <select id="daysSelect" onchange="calculateBasket()">
-        <option value="1">1 день</option>
-        <option value="3" selected>3 дня</option>
-        <option value="7">7 дней (неделя)</option>
-      </select>
-    </div>
-
-    <div class="form-row">
-      <label>🏪 Магазин:</label>
-      <select id="storeSelect" onchange="calculateBasket()">
-        <option value="pyaterochka" selected>🔴 Пятёрочка</option>
-        <option value="magnit">🟥 Магнит</option>
-        <option value="perekrestok">🟢 Перекрёсток</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="section-title">📊 Выполнение нормы КБЖУ</div>
-    
-    <div class="cal-bar-wrap">
-      <div class="cal-bar-info">
-        <span>Калории: <strong id="caloriesVal">0</strong> ккал</span>
-        <span style="color: var(--hint-color);" id="caloriesTarget">цель: 0</span>
-      </div>
-      <div class="progress-bar">
-        <div class="progress-fill" id="calProgress"></div>
+    <div class="card">
+      <div class="placeholder-box">
+        <div class="placeholder-icon">🏷</div>
+        <div class="placeholder-title">Чипсы & Табы готовятся</div>
+        <div class="placeholder-desc">Здесь выпадающие списки заменятся на цветные интерактивные кнопки быстрого переключения в один клик.</div>
       </div>
     </div>
+  </section>
 
-    <div class="macro-grid">
-      <div class="macro-box">
-        <div class="macro-label">Белки</div>
-        <div class="macro-value val-protein" id="proteinVal">0г</div>
-      </div>
-      <div class="macro-box">
-        <div class="macro-label">Жиры</div>
-        <div class="macro-value val-fat" id="fatsVal">0г</div>
-      </div>
-      <div class="macro-box">
-        <div class="macro-label">Углеводы</div>
-        <div class="macro-value val-carb" id="carbsVal">0г</div>
+  <!-- РАЗДЕЛ 2: Визуализация КБЖУ в виде кольцевых диаграмм (Apple Health / Язио) -->
+  <section id="tab-rings" class="tab-section">
+    <div class="card">
+      <div class="section-title">Раздел 2: Кольца КБЖУ</div>
+      <div class="placeholder-box">
+        <div class="placeholder-icon">⭕</div>
+        <div class="placeholder-title">Кольцевые диаграммы</div>
+        <div class="placeholder-desc">Здесь появятся анимированные кольца активности (Apple Health стиль) для Белка, Жиров, Углеводов и Калорий.</div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="card">
-    <div class="section-title" style="display: flex; justify-content: space-between;">
-      <span>🛒 Продукты в корзине</span>
-      <span id="totalCostBadge" style="color: var(--button-color); font-weight: 700;">0 ₽</span>
+  <!-- РАЗДЕЛ 3: Карточки товаров в стиле продуктовых витрин (E-commerce UI) -->
+  <section id="tab-showcase" class="tab-section">
+    <div class="card">
+      <div class="section-title">Раздел 3: Витрина продуктов</div>
+      <div class="placeholder-box">
+        <div class="placeholder-icon">🛒</div>
+        <div class="placeholder-title">Продуктовые карточки</div>
+        <div class="placeholder-desc">Здесь будет витрина товаров супермаркета с иконками категорий, кнопками «+ / −» и заменой продуктов.</div>
+      </div>
     </div>
+  </section>
 
-    <div class="item-list" id="itemsContainer"></div>
-  </div>
-
-  <div class="bottom-bar">
-    <button class="btn btn-icon" onclick="triggerHaptic(); calculateBasket();" title="Пересчитать">🔄</button>
-    <div class="dock-info">
-      <span class="dock-label">К оплате:</span>
-      <span class="dock-cost" id="dockCost">0 ₽</span>
+  <!-- РАЗДЕЛ 4: Интерактивная «Шкала экономии» под бюджетом -->
+  <section id="tab-economy" class="tab-section">
+    <div class="card">
+      <div class="section-title">Раздел 4: Шкала экономии</div>
+      <div class="placeholder-box">
+        <div class="placeholder-icon">📊</div>
+        <div class="placeholder-title">Умный бюджет & Экономия</div>
+        <div class="placeholder-desc">Здесь появится умная шкала оставшихся средств с подсказками: «Осталось 120 ₽ — можно добавить яблоки!».</div>
+      </div>
     </div>
-    <a id="orderBtn" class="btn btn-primary" href="https://kuper.ru" target="_blank" onclick="triggerHaptic()">
-      <span>Заказать</span>
-      <span>⚡</span>
-    </a>
-  </div>
+  </section>
+
+  <!-- РАЗДЕЛ 5: Темы оформления и тактильный отклик (Haptic Feedback) -->
+  <section id="tab-themes" class="tab-section">
+    <div class="card">
+      <div class="section-title">Раздел 5: Темы & Haptics</div>
+      <div class="placeholder-box">
+        <div class="placeholder-icon">🎨</div>
+        <div class="placeholder-title">Стилизация и виброотклик</div>
+        <div class="placeholder-desc">Здесь будут переключатели светлой/тёмной темы, акцентных цветов и настройки тактильной отдачи.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- РАЗДЕЛ 6: Экран рецепта / Меню на день (Киллер-фича) -->
+  <section id="tab-recipe" class="tab-section">
+    <div class="card">
+      <div class="section-title">Раздел 6: Рецепты и Меню на день</div>
+      <div class="placeholder-box">
+        <div class="placeholder-icon">🍽</div>
+        <div class="placeholder-title">Раскладка рациона</div>
+        <div class="placeholder-desc">Здесь бот превратит набор купленных продуктов в готовый план питания: Завтрак, Обед, Перекус и Ужин!</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Док-бар с 6 разделами -->
+  <nav class="dock-container">
+    <div class="dock-item active" onclick="switchTab('chips', '🏷 Выбор & Чипсы', 'Раздел 1: Быстрый выбор параметров')">
+      <div class="dock-icon">🏷</div>
+      <div class="dock-text">Чипсы</div>
+    </div>
+    <div class="dock-item" onclick="switchTab('rings', '⭕ Кольца КБЖУ', 'Раздел 2: Apple Health / Язио стиль')">
+      <div class="dock-icon">⭕</div>
+      <div class="dock-text">Кольца</div>
+    </div>
+    <div class="dock-item" onclick="switchTab('showcase', '🛒 Витрина', 'Раздел 3: E-commerce карточки товаров')">
+      <div class="dock-icon">🛒</div>
+      <div class="dock-text">Витрина</div>
+    </div>
+    <div class="dock-item" onclick="switchTab('economy', '📊 Экономия', 'Раздел 4: Шкала бюджета и выгоды')">
+      <div class="dock-icon">📊</div>
+      <div class="dock-text">Бюджет</div>
+    </div>
+    <div class="dock-item" onclick="switchTab('themes', '🎨 Темы & Отклик', 'Раздел 5: Персонализация и виброотклик')">
+      <div class="dock-icon">🎨</div>
+      <div class="dock-text">Темы</div>
+    </div>
+    <div class="dock-item" onclick="switchTab('recipe', '🍽 Меню на день', 'Раздел 6: Готовые рецепты из корзины')">
+      <div class="dock-icon">🍽</div>
+      <div class="dock-text">Рецепты</div>
+    </div>
+  </nav>
 
   <script>
     const tg = window.Telegram?.WebApp;
@@ -407,136 +348,36 @@
 
     function triggerHaptic() {
       if (tg?.HapticFeedback) {
-        tg.HapticFeedback.impactOccurred('medium');
+        tg.HapticFeedback.impactOccurred('light');
       }
     }
 
-    const CATALOG = [
-      { name: "Филе грудки цыпленка охлажденное", cat: "p", price: 369, weight: 850, cal: 113, p: 23.6, f: 1.9, c: 0.4 },
-      { name: "Яйца куриные С1 (10 шт)", cat: "p", price: 119, weight: 550, cal: 157, p: 12.7, f: 11.5, c: 0.7 },
-      { name: "Творог рассыпчатый 5%", cat: "p", price: 99, weight: 200, cal: 121, p: 16.0, f: 5.0, c: 3.0 },
-      { name: "Печень цыплят-бройлеров", cat: "p", price: 169, weight: 500, cal: 136, p: 19.1, f: 6.3, c: 0.6 },
-      { name: "Филе минтая замороженное", cat: "p", price: 249, weight: 600, cal: 72, p: 15.9, f: 0.9, c: 0.0 },
-      { name: "Крупа гречневая ядрица", cat: "c", price: 79, weight: 800, cal: 313, p: 12.6, f: 3.3, c: 62.1 },
-      { name: "Овсяные хлопья Геркулес", cat: "c", price: 69, weight: 500, cal: 352, p: 12.3, f: 6.2, c: 61.8 },
-      { name: "Макароны перья твердые сорта", cat: "c", price: 75, weight: 450, cal: 344, p: 12.0, f: 1.1, c: 71.5 },
-      { name: "Рис круглозерный", cat: "c", price: 95, weight: 800, cal: 340, p: 7.0, f: 0.6, c: 77.0 },
-      { name: "Огурцы среднеплодные свежие", cat: "v", price: 129, weight: 600, cal: 14, p: 0.8, f: 0.1, c: 2.5 },
-      { name: "Томаты сливовидные", cat: "v", price: 149, weight: 600, cal: 20, p: 1.1, f: 0.2, c: 3.7 },
-      { name: "Яблоки сезонные", cat: "v", price: 119, weight: 1000, cal: 47, p: 0.4, f: 0.4, c: 9.8 },
-      { name: "Сыр Тильзитер 45%", cat: "f", price: 189, weight: 200, cal: 334, p: 25.0, f: 26.0, c: 0.0 },
-      { name: "Арахис жареный", cat: "f", price: 99, weight: 150, cal: 567, p: 26.0, f: 45.0, c: 10.0 }
-    ];
+    function switchTab(tabKey, title, subtitle) {
+      triggerHaptic();
+
+      // Переключаем активную кнопку в док-баре
+      const items = document.querySelectorAll('.dock-item');
+      items.forEach(el => el.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+
+      // Переключаем секцию
+      const sections = document.querySelectorAll('.tab-section');
+      sections.forEach(s => s.classList.remove('active'));
+      const activeSection = document.getElementById('tab-' + tabKey);
+      if (activeSection) activeSection.classList.add('active');
+
+      // Обновляем шапку
+      document.getElementById('screenTitle').innerText = title;
+      document.getElementById('screenSubtitle').innerText = subtitle;
+    }
 
     function updateBudget(val) {
       document.getElementById('budgetDisplay').innerText = val + ' ₽';
-      calculateBasket();
     }
 
     function calculateBasket() {
-      const budget = parseFloat(document.getElementById('budgetInput').value);
-      const goal = document.getElementById('goalSelect').value;
-      const days = parseInt(document.getElementById('daysSelect').value);
-
-      // Цели КБЖУ (суточные x дни)
-      let baseCal = 2200;
-      let baseP = 130;
-      let baseF = 65;
-      let baseC = 250;
-
-      if (goal === 'weight_loss') {
-        baseCal = 1800; baseP = 140; baseF = 50; baseC = 190;
-      } else if (goal === 'muscle_gain') {
-        baseCal = 2600; baseP = 160; baseF = 75; baseC = 310;
-      } else if (goal === 'student_budget') {
-        baseCal = 2100; baseP = 120; baseF = 55; baseC = 260;
-      }
-
-      const targetCal = baseCal * days;
-      const targetP = baseP * days;
-      const targetF = baseF * days;
-      const targetC = baseC * days;
-
-      // Балансировка под бюджет
-      let currentCost = 0;
-      const basket = [];
-
-      function add(item, qty = 1) {
-        if (currentCost + (item.price * qty) <= budget) {
-          basket.push({ item, qty });
-          currentCost += (item.price * qty);
-          return true;
-        }
-        return false;
-      }
-
-      // Обязательные базовые категории
-      add(CATALOG[0]); // Курица
-      add(CATALOG[1]); // Яйца
-      add(CATALOG[5]); // Гречка
-      add(CATALOG[6]); // Овсянка
-      add(CATALOG[9]); // Огурцы
-      add(CATALOG[12]); // Сыр
-
-      // Добор до бюджета
-      for (let i = 0; i < CATALOG.length; i++) {
-        if (currentCost + CATALOG[i].price <= budget) {
-          const exist = basket.find(b => b.item.name === CATALOG[i].name);
-          if (exist) {
-            exist.qty += 1;
-            currentCost += CATALOG[i].price;
-          } else {
-            add(CATALOG[i], 1);
-          }
-        }
-      }
-
-      // Подсчет факта
-      let totalCal = 0, totalP = 0, totalF = 0, totalC = 0;
-      basket.forEach(b => {
-        const factor = (b.item.weight * b.qty) / 100.0;
-        totalCal += b.item.cal * factor;
-        totalP += b.item.p * factor;
-        totalF += b.item.f * factor;
-        totalC += b.item.c * factor;
-      });
-
-      // Рендер
-      document.getElementById('caloriesVal').innerText = Math.round(totalCal);
-      document.getElementById('caloriesTarget').innerText = 'цель: ' + Math.round(targetCal);
-      const pct = Math.min(Math.round((totalCal / targetCal) * 100), 100);
-      document.getElementById('calProgress').style.width = pct + '%';
-
-      document.getElementById('proteinVal').innerText = Math.round(totalP) + 'г';
-      document.getElementById('fatsVal').innerText = Math.round(totalF) + 'г';
-      document.getElementById('carbsVal').innerText = Math.round(totalC) + 'г';
-      document.getElementById('totalCostBadge').innerText = Math.round(currentCost) + ' ₽';
-      const dockCost = document.getElementById('dockCost');
-      if (dockCost) dockCost.innerText = Math.round(currentCost) + ' ₽';
-
-      const container = document.getElementById('itemsContainer');
-      container.innerHTML = '';
-      basket.forEach(b => {
-        const div = document.createElement('div');
-        div.className = 'item-card';
-        div.innerHTML = `
-          <div>
-            <div class="item-name">${b.item.name}</div>
-            <div class="item-sub">${b.item.weight * b.qty}г | Б: ${Math.round(b.item.p * b.qty)}г · Ж: ${Math.round(b.item.f * b.qty)}г</div>
-          </div>
-          <div class="item-price">
-            <div class="item-cost">${b.item.price * b.qty} ₽</div>
-            <div class="item-qty">${b.qty} шт.</div>
-          </div>
-        `;
-        container.appendChild(div);
-      });
-
-      const q = encodeURIComponent("куриное филе яйца гречка");
-      document.getElementById('orderBtn').href = `https://kuper.ru/multisearch?q=${q}`;
+      // Заготовка под вычисления
     }
-
-    window.onload = () => calculateBasket();
   </script>
 </body>
 </html>
