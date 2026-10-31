@@ -192,16 +192,75 @@
       letter-spacing: -0.1px;
     }
 
-    /* Карточки в списке товаров */
-    .item-card {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(255,255,255,0.03);
-      padding: 10px 12px;
-      border-radius: 12px;
-      border-left: 3px solid var(--accent);
+    /* Чипсы и Табы (Раздел 1) */
+    .chip-group-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--hint-color);
       margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chip-scroll {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+    .chip-scroll::-webkit-scrollbar { display: none; }
+
+    .chip-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .chip {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      color: var(--text-color);
+      font-size: 13.5px;
+      font-weight: 600;
+      user-select: none;
+    }
+
+    .chip:active {
+      transform: scale(0.96);
+    }
+
+    .chip.active {
+      background: rgba(56, 189, 248, 0.16);
+      border-color: #38bdf8;
+      color: #38bdf8;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.25);
+    }
+
+    .chip-icon {
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .chip-badge {
+      font-size: 11px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2px 6px;
+      border-radius: 6px;
+      margin-left: auto;
+      color: var(--hint-color);
+    }
+    .chip.active .chip-badge {
+      background: rgba(56, 189, 248, 0.25);
+      color: #38bdf8;
     }
   </style>
 </head>
@@ -215,40 +274,88 @@
 
   <!-- РАЗДЕЛ 1: Замена выпадающих списков на интерактивные «Чипсы» и табы -->
   <section id="tab-chips" class="tab-section active">
+    
+    <!-- 1. Выбор магазина (Горизонтальные брендовые чипсы) -->
     <div class="card">
-      <div class="section-title">Раздел 1: Настройки & Чипсы</div>
-      <div class="form-row">
-        <label>💰 Бюджет:</label>
-        <div style="text-align: right;">
-          <span class="budget-slider-val" id="budgetDisplay">1500 ₽</span><br>
-          <input type="range" id="budgetInput" min="500" max="7000" step="100" value="1500" style="width: 130px;" oninput="updateBudget(this.value)">
+      <div class="chip-group-label">🏪 Выберите супермаркет:</div>
+      <div class="chip-scroll" id="storeChips">
+        <div class="chip active" data-store="pyaterochka" onclick="selectStore(this, 'pyaterochka')">
+          <span class="chip-icon">🔴</span>
+          <span>Пятёрочка</span>
+          <span class="chip-badge">25 мин</span>
+        </div>
+        <div class="chip" data-store="magnit" onclick="selectStore(this, 'magnit')">
+          <span class="chip-icon">🟥</span>
+          <span>Магнит</span>
+          <span class="chip-badge">Выгодно</span>
+        </div>
+        <div class="chip" data-store="perekrestok" onclick="selectStore(this, 'perekrestok')">
+          <span class="chip-icon">🟢</span>
+          <span>Перекрёсток</span>
+          <span class="chip-badge">Ассортимент</span>
         </div>
       </div>
-      <div class="form-row">
-        <label>🎯 Цель:</label>
-        <select id="goalSelect" onchange="calculateBasket()">
-          <option value="weight_loss">📉 Похудение</option>
-          <option value="maintenance" selected>⚖️ Поддержание</option>
-          <option value="muscle_gain">💪 Набор массы</option>
-          <option value="student_budget">💰 Студент-Эконом</option>
-        </select>
-      </div>
-      <div class="form-row">
-        <label>🏪 Магазин:</label>
-        <select id="storeSelect" onchange="calculateBasket()">
-          <option value="pyaterochka" selected>🔴 Пятёрочка</option>
-          <option value="magnit">🟥 Магнит</option>
-          <option value="perekrestok">🟢 Перекрёсток</option>
-        </select>
-      </div>
     </div>
+
+    <!-- 2. Выбор диетологической цели (Сетка интерактивных чипсов) -->
     <div class="card">
-      <div class="placeholder-box">
-        <div class="placeholder-icon">🏷</div>
-        <div class="placeholder-title">Чипсы & Табы готовятся</div>
-        <div class="placeholder-desc">Здесь выпадающие списки заменятся на цветные интерактивные кнопки быстрого переключения в один клик.</div>
+      <div class="chip-group-label">🎯 Ваша цель по питанию:</div>
+      <div class="chip-grid" id="goalChips">
+        <div class="chip active" data-goal="maintenance" onclick="selectGoal(this, 'maintenance')">
+          <span class="chip-icon">⚖️</span>
+          <div>
+            <div>Баланс</div>
+            <div style="font-size: 10px; color: var(--hint-color); font-weight: normal;">Норма веса</div>
+          </div>
+        </div>
+        <div class="chip" data-goal="weight_loss" onclick="selectGoal(this, 'weight_loss')">
+          <span class="chip-icon">📉</span>
+          <div>
+            <div>Похудение</div>
+            <div style="font-size: 10px; color: var(--hint-color); font-weight: normal;">Дефицит 18%</div>
+          </div>
+        </div>
+        <div class="chip" data-goal="muscle_gain" onclick="selectGoal(this, 'muscle_gain')">
+          <span class="chip-icon">💪</span>
+          <div>
+            <div>Масса</div>
+            <div style="font-size: 10px; color: var(--hint-color); font-weight: normal;">Профицит 12%</div>
+          </div>
+        </div>
+        <div class="chip" data-goal="student_budget" onclick="selectGoal(this, 'student_budget')">
+          <span class="chip-icon">💰</span>
+          <div>
+            <div>Эконом</div>
+            <div style="font-size: 10px; color: var(--hint-color); font-weight: normal;">Макс. белка/₽</div>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- 3. Срок рациона (Табы дней) -->
+    <div class="card">
+      <div class="chip-group-label">⏱ На сколько дней составляем рацион:</div>
+      <div class="chip-scroll" id="daysChips" style="justify-content: space-between;">
+        <div class="chip" style="flex: 1; justify-content: center;" data-days="1" onclick="selectDays(this, 1)">
+          <span>1 день</span>
+        </div>
+        <div class="chip active" style="flex: 1; justify-content: center;" data-days="3" onclick="selectDays(this, 3)">
+          <span>3 дня 🔥</span>
+        </div>
+        <div class="chip" style="flex: 1; justify-content: center;" data-days="7" onclick="selectDays(this, 7)">
+          <span>7 дней</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Информационная плашка статуса выбора -->
+    <div class="card" style="background: rgba(56, 189, 248, 0.08); border-color: rgba(56, 189, 248, 0.2);">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 13px; color: #38bdf8; font-weight: 700;">✅ Выбрано в 1 клик:</span>
+        <span id="chipsSummary" style="font-size: 12.5px; font-weight: 600;">Пятёрочка · Баланс · 3 дня</span>
+      </div>
+    </div>
+
   </section>
 
   <!-- РАЗДЕЛ 2: Визуализация КБЖУ в виде кольцевых диаграмм (Apple Health / Язио) -->
@@ -371,12 +478,42 @@
       document.getElementById('screenSubtitle').innerText = subtitle;
     }
 
-    function updateBudget(val) {
-      document.getElementById('budgetDisplay').innerText = val + ' ₽';
+    // Состояние выбора пользователя
+    let selectedStore = 'pyaterochka';
+    let selectedGoal = 'maintenance';
+    let selectedDays = 3;
+
+    function selectStore(el, storeKey) {
+      triggerHaptic();
+      document.querySelectorAll('#storeChips .chip').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      selectedStore = storeKey;
+      updateSummary();
     }
 
-    function calculateBasket() {
-      // Заготовка под вычисления
+    function selectGoal(el, goalKey) {
+      triggerHaptic();
+      document.querySelectorAll('#goalChips .chip').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      selectedGoal = goalKey;
+      updateSummary();
+    }
+
+    function selectDays(el, daysVal) {
+      triggerHaptic();
+      document.querySelectorAll('#daysChips .chip').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      selectedDays = daysVal;
+      updateSummary();
+    }
+
+    function updateSummary() {
+      const storeMap = { pyaterochka: 'Пятёрочка', magnit: 'Магнит', perekrestok: 'Перекрёсток' };
+      const goalMap = { maintenance: 'Баланс', weight_loss: 'Похудение', muscle_gain: 'Масса', student_budget: 'Эконом' };
+      const summaryEl = document.getElementById('chipsSummary');
+      if (summaryEl) {
+        summaryEl.innerText = `${storeMap[selectedStore]} · ${goalMap[selectedGoal]} · ${selectedDays} дн.`;
+      }
     }
   </script>
 </body>
