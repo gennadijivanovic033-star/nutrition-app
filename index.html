@@ -53,7 +53,7 @@
       margin-top: 3px;
     }
 
-    /* Карточки разделов */
+    /* Секции табов */
     .tab-section {
       display: none;
       animation: fadeIn 0.25s ease forwards;
@@ -113,28 +113,7 @@
       line-height: 1.4;
     }
 
-    /* Стили текущего калькулятора (Раздел 1) */
-    .form-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    .form-row:last-child { margin-bottom: 0; }
-
-    select, input[type="range"] {
-      background: #1e293b;
-      color: #f8fafc;
-      border: 1px solid rgba(255,255,255,0.16);
-      border-radius: 8px;
-      padding: 6px 10px;
-      font-size: 14px;
-      outline: none;
-    }
-    select option { background-color: #1e293b; color: #f8fafc; }
-    .budget-slider-val { font-weight: 800; color: var(--button-color); font-size: 16px; }
-
-    /* Док-бар с 6 разделами */
+    /* Док-бар (Главная, Каталог, Рецепт, Корзина, Профиль) */
     .dock-container {
       position: fixed;
       bottom: 10px;
@@ -147,7 +126,7 @@
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 22px;
-      padding: 6px 8px;
+      padding: 6px 6px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -180,508 +159,38 @@
     }
 
     .dock-icon {
-      font-size: 19px;
+      font-size: 20px;
       line-height: 1;
       margin-bottom: 3px;
     }
 
     .dock-text {
-      font-size: 9.5px;
-      font-weight: 600;
+      font-size: 10px;
+      font-weight: 700;
       white-space: nowrap;
       letter-spacing: -0.1px;
     }
 
-    /* Чипсы и Табы (Раздел 1) */
-    .chip-group-label {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--hint-color);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .chip-scroll {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-      scrollbar-width: none;
-    }
-    .chip-scroll::-webkit-scrollbar { display: none; }
-
-    .chip-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-    }
-
-    .chip {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Базовые кнопки */
+    .btn {
+      padding: 12px 16px;
       border-radius: 14px;
-      padding: 10px 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      color: var(--text-color);
-      font-size: 13.5px;
-      font-weight: 600;
-      user-select: none;
-    }
-
-    .chip:active {
-      transform: scale(0.96);
-    }
-
-    .chip.active {
-      background: rgba(56, 189, 248, 0.16);
-      border-color: #38bdf8;
-      color: #38bdf8;
-      box-shadow: 0 0 14px rgba(56, 189, 248, 0.25);
-    }
-
-    .chip-icon {
-      font-size: 18px;
-      line-height: 1;
-    }
-
-    /* Раздел 2: Кольца КБЖУ (Apple Health / Yazio стиль) */
-    .rings-wrapper {
-      position: relative;
-      width: 200px;
-      height: 200px;
-      margin: 10px auto 16px auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .rings-svg {
-      width: 100%;
-      height: 100%;
-      transform: rotate(-90deg);
-    }
-
-    .ring-bg {
-      fill: none;
-      stroke-width: 10;
-      opacity: 0.16;
-    }
-
-    .ring-progress {
-      fill: none;
-      stroke-width: 10;
-      stroke-linecap: round;
-      transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .ring-protein { stroke: var(--protein); }
-    .ring-fat { stroke: var(--fat); }
-    .ring-carb { stroke: var(--carb); }
-
-    .rings-center-text {
-      position: absolute;
-      text-align: center;
-      pointer-events: none;
-    }
-
-    .rings-center-cal {
-      font-size: 24px;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      color: var(--text-color);
-      line-height: 1.1;
-    }
-
-    .rings-center-label {
-      font-size: 11px;
-      color: var(--hint-color);
-      text-transform: uppercase;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      margin-top: 2px;
-    }
-
-    .macro-cards-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-top: 14px;
-    }
-
-    .macro-card-item {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 14px;
-      padding: 10px 8px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .macro-card-item::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-    }
-
-    .card-protein::before { background: var(--protein); }
-    .card-fat::before { background: var(--fat); }
-    .card-carb::before { background: var(--carb); }
-
-    .macro-title {
-      font-size: 11px;
-      color: var(--hint-color);
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-
-    .macro-grams {
-      font-size: 16px;
-      font-weight: 800;
-      margin-top: 3px;
-    }
-
-    .macro-target-hint {
-      font-size: 10px;
-      color: var(--hint-color);
-      margin-top: 2px;
-    }
-
-    /* Раздел 3: E-commerce Продуктовые карточки */
-    .catalog-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .product-row-card {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      padding: 12px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      transition: transform 0.15s ease, border-color 0.15s ease;
-    }
-
-    .product-row-card:active {
-      transform: scale(0.99);
-    }
-
-    .product-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.06);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      flex-shrink: 0;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .product-main-info {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .product-title {
-      font-size: 13.5px;
-      font-weight: 700;
-      color: var(--text-color);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .product-meta {
-      font-size: 11px;
-      color: var(--hint-color);
-      margin-top: 2px;
-    }
-
-    .product-price-block {
-      text-align: right;
-      margin-right: 4px;
-    }
-
-    .product-single-price {
-      font-size: 14px;
-      font-weight: 800;
-      color: #38bdf8;
-    }
-
-    .product-single-weight {
-      font-size: 10px;
-      color: var(--hint-color);
-    }
-
-    /* Степпер количества: [-] 1 [+] */
-    .stepper {
-      display: flex;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
-      padding: 2px;
-      gap: 4px;
-    }
-
-    .stepper-btn {
-      width: 28px;
-      height: 28px;
-      border-radius: 8px;
       border: none;
-      background: transparent;
-      color: var(--text-color);
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background 0.15s ease;
-    }
-
-    .stepper-btn:active {
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    .stepper-qty {
-      font-size: 13px;
-      font-weight: 700;
-      min-width: 18px;
-      text-align: center;
-    }
-
-    /* Кнопка быстрой замены */
-    .swap-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 9px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(255, 255, 255, 0.04);
-      color: var(--hint-color);
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-    .swap-btn:active {
-      background: rgba(56, 189, 248, 0.2);
-      color: #38bdf8;
-    }
-
-    /* Раздел 4: Шкала экономии и умный бюджет */
-    .budget-preset-pills {
-      display: flex;
-      gap: 6px;
-      margin-top: 10px;
-    }
-
-    .preset-pill {
-      flex: 1;
-      padding: 7px 4px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      font-size: 11.5px;
-      font-weight: 700;
-      text-align: center;
-      cursor: pointer;
-      color: var(--text-color);
-      transition: all 0.15s ease;
-    }
-
-    .preset-pill.active {
-      background: rgba(16, 185, 129, 0.18);
-      border-color: #10b981;
-      color: #10b981;
-    }
-
-    .economy-meter-wrap {
-      margin-top: 16px;
-    }
-
-    .meter-labels {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12.5px;
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-
-    .meter-bar {
-      height: 12px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 99px;
-      overflow: hidden;
-      display: flex;
-    }
-
-    .meter-spent {
-      background: linear-gradient(90deg, #38bdf8, #10b981);
-      width: 80%;
-      height: 100%;
-      transition: width 0.3s ease;
-    }
-
-    .meter-remains {
-      background: rgba(255, 255, 255, 0.15);
-      flex: 1;
-      height: 100%;
-    }
-
-    .suggestion-box {
-      margin-top: 14px;
-      background: rgba(56, 189, 248, 0.08);
-      border: 1px dashed rgba(56, 189, 248, 0.3);
-      border-radius: 14px;
-      padding: 12px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .suggestion-icon {
-      font-size: 26px;
-    }
-
-    .suggestion-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: #38bdf8;
-    }
-
-    .suggestion-desc {
-      font-size: 11.5px;
-      color: var(--hint-color);
-      margin-top: 2px;
-    }
-
-    /* Раздел 5: Темы и Тактильный отклик */
-    .theme-color-row {
-      display: flex;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .color-swatch {
-      flex: 1;
-      height: 42px;
-      border-radius: 12px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
-      border: 2px solid transparent;
-      transition: transform 0.15s ease, border-color 0.15s ease;
-    }
-
-    .color-swatch:active {
-      transform: scale(0.94);
-    }
-
-    .color-swatch.active {
-      border-color: #ffffff;
-      box-shadow: 0 0 14px rgba(255, 255, 255, 0.4);
-    }
-
-    .haptic-test-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
       gap: 8px;
-      margin-top: 10px;
+      text-decoration: none;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
-
-    .haptic-btn {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      padding: 10px 4px;
-      text-align: center;
-      cursor: pointer;
-      color: var(--text-color);
-      font-size: 12px;
-      font-weight: 700;
-      transition: background 0.15s ease;
-    }
-
-    .haptic-btn:active {
-      background: rgba(56, 189, 248, 0.2);
-      border-color: #38bdf8;
-    }
-
-    /* Раздел 6: Меню на день и Рецепты */
-    .meal-timeline {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 6px;
-    }
-
-    .meal-card {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      padding: 12px 14px;
-      position: relative;
-    }
-
-    .meal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-    }
-
-    .meal-tag {
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .meal-cals {
-      font-size: 12px;
-      font-weight: 700;
-      color: #38bdf8;
-    }
-
-    .meal-dish-name {
-      font-size: 14.5px;
-      font-weight: 700;
-      color: var(--text-color);
-      margin-bottom: 4px;
-    }
-
-    .meal-ingredients {
-      font-size: 12px;
-      color: var(--hint-color);
-      line-height: 1.4;
-    }
-
-    .meal-macros {
-      margin-top: 8px;
-      display: flex;
-      gap: 12px;
-      font-size: 11px;
-      font-weight: 600;
+    .btn:active { transform: scale(0.96); }
+    .btn-primary {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.38);
     }
   </style>
 </head>
@@ -689,388 +198,91 @@
 
   <!-- Верхняя шапка -->
   <div class="header">
-    <h1 id="screenTitle">🏷 Выбор & Чипсы</h1>
-    <p id="screenSubtitle">Раздел 1: Быстрый выбор параметров</p>
+    <h1 id="screenTitle">🏠 Главная</h1>
+    <p id="screenSubtitle">Персональный баланс КБЖУ под ваш бюджет</p>
   </div>
 
-  <!-- РАЗДЕЛ 1: Замена выпадающих списков на интерактивные «Чипсы» и табы -->
-  <section id="tab-chips" class="tab-section active">
-    
-    <!-- 1. Выбор магазина (Горизонтальные брендовые чипсы) -->
+  <!-- РАЗДЕЛ 1: ГЛАВНАЯ -->
+  <section id="tab-home" class="tab-section active">
     <div class="card">
-      <div class="chip-group-label">🏪 Выберите супермаркет:</div>
-      <div class="chip-scroll" id="storeChips">
-        <div class="chip active" data-store="pyaterochka" onclick="selectStore(this, 'pyaterochka')">
-          <span class="chip-icon">🔴</span>
-          <span>Пятёрочка</span>
-          <span class="chip-badge">25 мин</span>
-        </div>
-        <div class="chip" data-store="magnit" onclick="selectStore(this, 'magnit')">
-          <span class="chip-icon">🟥</span>
-          <span>Магнит</span>
-          <span class="chip-badge">Выгодно</span>
-        </div>
-        <div class="chip" data-store="perekrestok" onclick="selectStore(this, 'perekrestok')">
-          <span class="chip-icon">🟢</span>
-          <span>Перекрёсток</span>
-          <span class="chip-badge">Ассортимент</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 2. Выбор диетологической цели (Сетка интерактивных чипсов) -->
-    <div class="card">
-      <div class="chip-group-label">🎯 Ваша цель по питанию:</div>
-      <div class="chip-grid" id="goalChips">
-        <div class="chip active" data-goal="maintenance" onclick="selectGoal(this, 'maintenance')">
-          <span class="chip-icon">⚖️</span>
-          <div>
-            <div>Баланс</div>
-            <div style="font-size: 10px; color: var(--hint-color); font-weight: normal;">Норма веса</div>
-          </div>
-        </div>
-        <div class="chip" data-goal="weight_loss" onclick="selectGoal(this, 'weight_loss')">
-          <span class="chip-icon">📉</span>
-          <div>
-            <div>Похудение</div>
-            <div style="font-size: 10px; color: var(--hint-color); font-weight: normal;">Дефицит 18%</div>
-          </div>
-        </div>
-        <div class="chip" data-goal="muscle_gain" onclick="selectGoal(this, 'muscle_gain')">
-          <span class="chip-icon">💪</span>
-          <div>
-            <div>Масса</div>
-            <div style="font-size: 10px; color: var(--hint-color); font-weight: normal;">Профицит 12%</div>
-          </div>
-        </div>
-        <div class="chip" data-goal="student_budget" onclick="selectGoal(this, 'student_budget')">
-          <span class="chip-icon">💰</span>
-          <div>
-            <div>Эконом</div>
-            <div style="font-size: 10px; color: var(--hint-color); font-weight: normal;">Макс. белка/₽</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3. Срок рациона (Табы дней) -->
-    <div class="card">
-      <div class="chip-group-label">⏱ На сколько дней составляем рацион:</div>
-      <div class="chip-scroll" id="daysChips" style="justify-content: space-between;">
-        <div class="chip" style="flex: 1; justify-content: center;" data-days="1" onclick="selectDays(this, 1)">
-          <span>1 день</span>
-        </div>
-        <div class="chip active" style="flex: 1; justify-content: center;" data-days="3" onclick="selectDays(this, 3)">
-          <span>3 дня 🔥</span>
-        </div>
-        <div class="chip" style="flex: 1; justify-content: center;" data-days="7" onclick="selectDays(this, 7)">
-          <span>7 дней</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Информационная плашка статуса выбора -->
-    <div class="card" style="background: rgba(56, 189, 248, 0.08); border-color: rgba(56, 189, 248, 0.2);">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <span style="font-size: 13px; color: #38bdf8; font-weight: 700;">✅ Выбрано в 1 клик:</span>
-        <span id="chipsSummary" style="font-size: 12.5px; font-weight: 600;">Пятёрочка · Баланс · 3 дня</span>
-      </div>
-    </div>
-
-  </section>
-
-  <!-- РАЗДЕЛ 2: Визуализация КБЖУ в виде кольцевых диаграмм (Apple Health / Язио) -->
-  <section id="tab-rings" class="tab-section">
-    <div class="card">
-      <div class="section-title" style="display: flex; justify-content: space-between;">
-        <span>⭕ Кольца активности КБЖУ</span>
-        <span id="calGoalBadge" style="color: var(--accent); font-weight: 700;">Норма на 3 дня</span>
-      </div>
-
-      <!-- Тройное кольцо активности Apple Health -->
-      <div class="rings-wrapper">
-        <svg class="rings-svg" viewBox="0 0 200 200">
-          <!-- 1. Внешнее кольцо: Белки (Радиус 80) -->
-          <circle class="ring-bg ring-protein" cx="100" cy="100" r="80"></circle>
-          <circle id="ringProtein" class="ring-progress ring-protein" cx="100" cy="100" r="80"
-                  stroke-dasharray="502.65" stroke-dashoffset="502.65"></circle>
-
-          <!-- 2. Среднее кольцо: Жиры (Радиус 64) -->
-          <circle class="ring-bg ring-fat" cx="100" cy="100" r="64"></circle>
-          <circle id="ringFat" class="ring-progress ring-fat" cx="100" cy="100" r="64"
-                  stroke-dasharray="402.12" stroke-dashoffset="402.12"></circle>
-
-          <!-- 3. Внутреннее кольцо: Углеводы (Радиус 48) -->
-          <circle class="ring-bg ring-carb" cx="100" cy="100" r="48"></circle>
-          <circle id="ringCarb" class="ring-progress ring-carb" cx="100" cy="100" r="48"
-                  stroke-dasharray="301.59" stroke-dashoffset="301.59"></circle>
-        </svg>
-
-        <!-- Центр кольца: Калории -->
-        <div class="rings-center-text">
-          <div class="rings-center-cal" id="centerCalVal">2 140</div>
-          <div class="rings-center-label">ккал / <span id="centerTargetCal">2 200</span></div>
-        </div>
-      </div>
-
-      <!-- Плашки микроэлементов с прогрессом -->
-      <div class="macro-cards-grid">
-        <div class="macro-card-item card-protein">
-          <div class="macro-title" style="color: var(--protein);">🥩 Белки</div>
-          <div class="macro-grams" id="ringProteinVal">128г</div>
-          <div class="macro-target-hint">цель: <span id="targetProteinVal">130г</span></div>
-        </div>
-
-        <div class="macro-card-item card-fat">
-          <div class="macro-title" style="color: var(--fat);">🥑 Жиры</div>
-          <div class="macro-grams" id="ringFatVal">58г</div>
-          <div class="macro-target-hint">цель: <span id="targetFatVal">65г</span></div>
-        </div>
-
-        <div class="macro-card-item card-carb">
-          <div class="macro-title" style="color: var(--carb);">🍚 Угли</div>
-          <div class="macro-grams" id="ringCarbVal">235г</div>
-          <div class="macro-target-hint">цель: <span id="targetCarbVal">250г</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Совет диетолога по текущим кольцам -->
-    <div class="card" style="background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.25);">
-      <div style="font-size: 13.5px; font-weight: 700; color: #10b981; margin-bottom: 4px;">💡 Баланс колец:</div>
-      <div id="ringsAdvice" style="font-size: 12.5px; color: var(--hint-color); line-height: 1.4;">
-        Белок заполнен на 98%! Отличный баланс для сохранения мышечной массы и высокой сытности.
+      <div class="section-title">📊 Обзор рациона</div>
+      <div class="placeholder-box">
+        <div class="placeholder-icon">🏠</div>
+        <div class="placeholder-title">Главный экран</div>
+        <div class="placeholder-desc">Здесь будут отображаться ваши суточные кольца КБЖУ, текущий бюджет и статус плана питания на сегодня.</div>
       </div>
     </div>
   </section>
 
-  <!-- РАЗДЕЛ 3: Карточки товаров в стиле продуктовых витрин (E-commerce UI) -->
-  <section id="tab-showcase" class="tab-section">
-    <div class="card" style="padding-bottom: 8px;">
-      <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
-        <span>🛒 Корзина супермаркета</span>
-        <span id="showcaseTotalCost" style="color: #10b981; font-weight: 800; font-size: 15px;">1 460 ₽</span>
-      </div>
-
-      <!-- Список интерактивных карточек товаров -->
-      <div class="catalog-list" id="productsCatalogContainer">
-        <!-- Генерируется динамически через renderCatalog() -->
+  <!-- РАЗДЕЛ 2: КАТАЛОГ -->
+  <section id="tab-catalog" class="tab-section">
+    <div class="card">
+      <div class="section-title">🥦 Каталог продуктов</div>
+      <div class="placeholder-box">
+        <div class="placeholder-icon">📦</div>
+        <div class="placeholder-title">Свежие продукты супермаркетов</div>
+        <div class="placeholder-desc">Здесь вы сможете выбирать любые любимые продукты по категориям (крупы, мясо/рыба, овощи, фрукты, молочка), на основе которых бот составит разнообразное меню на каждый день!</div>
       </div>
     </div>
   </section>
 
-  <!-- РАЗДЕЛ 4: Интерактивная «Шкала экономии» под бюджетом -->
-  <section id="tab-economy" class="tab-section">
-    <div class="card">
-      <div class="section-title" style="display: flex; justify-content: space-between;">
-        <span>💰 Лимит бюджета & Экономия</span>
-        <span id="economyBudgetText" style="color: #10b981; font-weight: 800;">1 500 ₽</span>
-      </div>
-
-      <!-- Быстрые пресеты бюджета в 1 клик -->
-      <div class="budget-preset-pills">
-        <div class="preset-pill" onclick="applyPresetBudget(1000)">1 000 ₽</div>
-        <div class="preset-pill active" onclick="applyPresetBudget(1500)">1 500 ₽</div>
-        <div class="preset-pill" onclick="applyPresetBudget(2500)">2 500 ₽</div>
-        <div class="preset-pill" onclick="applyPresetBudget(4000)">4 000 ₽</div>
-      </div>
-
-      <!-- Шкала экономии -->
-      <div class="economy-meter-wrap">
-        <div class="meter-labels">
-          <span>Сумма покупок: <strong id="spentVal" style="color: #38bdf8;">1 380 ₽</strong></span>
-          <span>Остаток: <strong id="leftVal" style="color: #10b981;">+120 ₽</strong></span>
-        </div>
-        <div class="meter-bar">
-          <div class="meter-spent" id="meterSpentBar" style="width: 92%;"></div>
-          <div class="meter-remains"></div>
-        </div>
-      </div>
-
-      <!-- Умная рекомендация по остатку -->
-      <div class="suggestion-box">
-        <div class="suggestion-icon">🍏</div>
-        <div>
-          <div class="suggestion-title" id="sugTitle">Осталось 120 ₽!</div>
-          <div class="suggestion-desc" id="sugDesc">
-            Этих денег как раз хватит на 1 кг сезонных яблок или пучок свежей зелени для идеальной клетчатки.
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Статистика выгоды -->
-    <div class="card">
-      <div class="section-title">📊 Эффективность на 1 рубль</div>
-      <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
-        <span style="color: var(--hint-color);">Цена 100г белка:</span>
-        <span style="font-weight: 700; color: #f8fafc;">~ 88 ₽</span>
-      </div>
-      <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
-        <span style="color: var(--hint-color);">Стоимость дня питания:</span>
-        <span style="font-weight: 700; color: #10b981;">~ 460 ₽ / день</span>
-      </div>
-      <div style="display: flex; justify-content: space-between; font-size: 13px;">
-        <span style="color: var(--hint-color);">Экономия относительно доставок:</span>
-        <span style="font-weight: 700; color: #38bdf8;">~ 65% выгоды</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- РАЗДЕЛ 5: Темы оформления и тактильный отклик (Haptic Feedback) -->
-  <section id="tab-themes" class="tab-section">
-    <!-- Выбор акцентного цвета приложения -->
-    <div class="card">
-      <div class="section-title">🎨 Акцентный цвет интерфейса</div>
-      <div style="font-size: 12.5px; color: var(--hint-color);">Выберите стиль подсветки элементов:</div>
-      <div class="theme-color-row">
-        <div class="color-swatch active" style="background: linear-gradient(135deg, #0284c7, #38bdf8);" onclick="setThemeAccent(this, '#38bdf8')">⚡</div>
-        <div class="color-swatch" style="background: linear-gradient(135deg, #059669, #10b981);" onclick="setThemeAccent(this, '#10b981')">🌿</div>
-        <div class="color-swatch" style="background: linear-gradient(135deg, #e11d48, #f43f5e);" onclick="setThemeAccent(this, '#f43f5e')">🔥</div>
-        <div class="color-swatch" style="background: linear-gradient(135deg, #7c3aed, #a855f7);" onclick="setThemeAccent(this, '#a855f7')">💎</div>
-        <div class="color-swatch" style="background: linear-gradient(135deg, #d97706, #f59e0b);" onclick="setThemeAccent(this, '#f59e0b')">☀️</div>
-      </div>
-    </div>
-
-    <!-- Режим фона (Тёмный / Светлый / Midnight) -->
-    <div class="card">
-      <div class="section-title">🌓 Режим темы оформления</div>
-      <div class="chip-scroll" style="justify-content: space-between;">
-        <div class="chip active" style="flex: 1; justify-content: center;" onclick="setThemeMode(this, 'dark')">
-          <span>🌙 Тёмная</span>
-        </div>
-        <div class="chip" style="flex: 1; justify-content: center;" onclick="setThemeMode(this, 'midnight')">
-          <span>🌌 Midnight</span>
-        </div>
-        <div class="chip" style="flex: 1; justify-content: center;" onclick="setThemeMode(this, 'light')">
-          <span>☀️ Светлая</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Интерактивный тест Haptic Feedback -->
-    <div class="card">
-      <div class="section-title">📳 Тактильный виброотклик (Haptics)</div>
-      <div style="font-size: 12.5px; color: var(--hint-color); margin-bottom: 8px;">
-        Проверьте вибромотор смартфона в Telegram:
-      </div>
-      <div class="haptic-test-grid">
-        <div class="haptic-btn" onclick="testHaptic('light')">Лёгкий (Light)</div>
-        <div class="haptic-btn" onclick="testHaptic('medium')">Средний (Medium)</div>
-        <div class="haptic-btn" onclick="testHaptic('heavy')">Мощный (Heavy)</div>
-      </div>
-      <div class="haptic-test-grid" style="margin-top: 8px;">
-        <div class="haptic-btn" style="color: #10b981;" onclick="testHapticNotification('success')">✅ Успех</div>
-        <div class="haptic-btn" style="color: #f59e0b;" onclick="testHapticNotification('warning')">⚠️ Внимание</div>
-        <div class="haptic-btn" style="color: #f43f5e;" onclick="testHapticNotification('error')">❌ Ошибка</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- РАЗДЕЛ 6: Экран рецепта / Меню на день (Киллер-фича) -->
+  <!-- РАЗДЕЛ 3: РЕЦЕПТ -->
   <section id="tab-recipe" class="tab-section">
-    <!-- Шапка плана питания -->
-    <div class="card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(56, 189, 248, 0.08)); border-color: rgba(16, 185, 129, 0.3);">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <div>
-          <div style="font-size: 15px; font-weight: 800; color: #10b981;">🍽 Рацион из вашей корзины</div>
-          <div style="font-size: 11.5px; color: var(--hint-color); margin-top: 2px;">4 сбалансированных приёма пищи на 1 день</div>
-        </div>
-        <span style="font-size: 13px; font-weight: 800; color: #38bdf8;">🔥 2 140 ккал</span>
-      </div>
-    </div>
-
-    <!-- Таймлайн 4 приёмов пищи -->
     <div class="card">
-      <div class="meal-timeline">
-        <!-- 1. Завтрак -->
-        <div class="meal-card" style="border-left: 3px solid #f59e0b;">
-          <div class="meal-header">
-            <span class="meal-tag" style="color: #f59e0b;">☕ Завтрак · 08:30</span>
-            <span class="meal-cals">520 ккал</span>
-          </div>
-          <div class="meal-dish-name">Овсяная каша Геркулес + 2 варёных яйца</div>
-          <div class="meal-ingredients">🥣 70г геркулеса, 🥚 2 яйца С1, 🍎 половинка сезонного яблока.</div>
-          <div class="meal-macros">
-            <span style="color: var(--protein);">Б: 28г</span>
-            <span style="color: var(--fat);">Ж: 18г</span>
-            <span style="color: var(--carb);">У: 58г</span>
-          </div>
-        </div>
-
-        <!-- 2. Обед -->
-        <div class="meal-card" style="border-left: 3px solid #10b981;">
-          <div class="meal-header">
-            <span class="meal-tag" style="color: #10b981;">🍲 Обед · 13:30</span>
-            <span class="meal-cals">680 ккал</span>
-          </div>
-          <div class="meal-dish-name">Гречка ядрица с куриным филе и салатом</div>
-          <div class="meal-ingredients">🍗 200г филе грудки на пару/гриле, 🌾 80г сухой гречки, 🥒 свежий огурец.</div>
-          <div class="meal-macros">
-            <span style="color: var(--protein);">Б: 54г</span>
-            <span style="color: var(--fat);">Ж: 8г</span>
-            <span style="color: var(--carb);">У: 64г</span>
-          </div>
-        </div>
-
-        <!-- 3. Полдник -->
-        <div class="meal-card" style="border-left: 3px solid #38bdf8;">
-          <div class="meal-header">
-            <span class="meal-tag" style="color: #38bdf8;">🍎 Полдник · 17:00</span>
-            <span class="meal-cals">340 ккал</span>
-          </div>
-          <div class="meal-dish-name">Творожный десерт с яблоком и сыром</div>
-          <div class="meal-ingredients">🧀 150г творога 5%, 🍎 яблоко дольками, 🧀 25г сыра Тильзитер.</div>
-          <div class="meal-macros">
-            <span style="color: var(--protein);">Б: 30г</span>
-            <span style="color: var(--fat);">Ж: 16г</span>
-            <span style="color: var(--carb);">У: 18г</span>
-          </div>
-        </div>
-
-        <!-- 4. Ужин -->
-        <div class="meal-card" style="border-left: 3px solid #a855f7;">
-          <div class="meal-header">
-            <span class="meal-tag" style="color: #a855f7;">🥗 Ужин · 20:00</span>
-            <span class="meal-cals">600 ккал</span>
-          </div>
-          <div class="meal-dish-name">Куриная грудка с тушёными овощами</div>
-          <div class="meal-ingredients">🍗 180г куриного филе, 🥒 свежие огурцы и зелень с 1 ч.л. масла.</div>
-          <div class="meal-macros">
-            <span style="color: var(--protein);">Б: 44г</span>
-            <span style="color: var(--fat);">Ж: 12г</span>
-            <span style="color: var(--carb);">У: 12г</span>
-          </div>
-        </div>
+      <div class="section-title">🍽 Меню и Рецепты на день</div>
+      <div class="placeholder-box">
+        <div class="placeholder-icon">📖</div>
+        <div class="placeholder-title">Умное меню по часам</div>
+        <div class="placeholder-desc">Бот автоматически распределяет выбранные продукты в пошаговые рецепты: Завтрак, Обед, Перекус и Ужин с таймингом готовки. Меню меняется каждый день!</div>
       </div>
     </div>
   </section>
 
-  <!-- Док-бар с 6 разделами -->
+  <!-- РАЗДЕЛ 4: КОРЗИНА -->
+  <section id="tab-cart" class="tab-section">
+    <div class="card">
+      <div class="section-title">🛒 Корзина доставки</div>
+      <div class="placeholder-box">
+        <div class="placeholder-icon">🛍</div>
+        <div class="placeholder-title">Итоговый заказ</div>
+        <div class="placeholder-desc">Суммарный чек, проверка остатка бюджета и моментальный переход к оформлению доставки в супермаркетах («Пятёрочка», «Магнит», «Перекрёсток») через Купер и Яндекс Еду.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- РАЗДЕЛ 5: ПРОФИЛЬ -->
+  <section id="tab-profile" class="tab-section">
+    <div class="card">
+      <div class="section-title">👤 Мой профиль и цели</div>
+      <div class="placeholder-box">
+        <div class="placeholder-icon">⚙️</div>
+        <div class="placeholder-title">Данные аудита тела</div>
+        <div class="placeholder-desc">Здесь сохранены ваши параметры (рост, вес, возраст, пол, активность и цель). Вы сможете перепройти аудит или изменить параметры в любой момент.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Новый Док-бар (5 разделов) -->
   <nav class="dock-container">
-    <div class="dock-item active" onclick="switchTab('chips', '🏷 Выбор & Чипсы', 'Раздел 1: Быстрый выбор параметров')">
-      <div class="dock-icon">🏷</div>
-      <div class="dock-text">Чипсы</div>
+    <div class="dock-item active" onclick="switchTab('home', '🏠 Главная', 'Персональный баланс КБЖУ под ваш бюджет')">
+      <div class="dock-icon">🏠</div>
+      <div class="dock-text">Главная</div>
     </div>
-    <div class="dock-item" onclick="switchTab('rings', '⭕ Кольца КБЖУ', 'Раздел 2: Apple Health / Язио стиль')">
-      <div class="dock-icon">⭕</div>
-      <div class="dock-text">Кольца</div>
+    <div class="dock-item" onclick="switchTab('catalog', '📦 Каталог', 'Выбор свежих продуктов для рациона')">
+      <div class="dock-icon">📦</div>
+      <div class="dock-text">Каталог</div>
     </div>
-    <div class="dock-item" onclick="switchTab('showcase', '🛒 Витрина', 'Раздел 3: E-commerce карточки товаров')">
-      <div class="dock-icon">🛒</div>
-      <div class="dock-text">Витрина</div>
-    </div>
-    <div class="dock-item" onclick="switchTab('economy', '📊 Экономия', 'Раздел 4: Шкала бюджета и выгоды')">
-      <div class="dock-icon">📊</div>
-      <div class="dock-text">Бюджет</div>
-    </div>
-    <div class="dock-item" onclick="switchTab('themes', '🎨 Темы & Отклик', 'Раздел 5: Персонализация и виброотклик')">
-      <div class="dock-icon">🎨</div>
-      <div class="dock-text">Темы</div>
-    </div>
-    <div class="dock-item" onclick="switchTab('recipe', '🍽 Меню на день', 'Раздел 6: Готовые рецепты из корзины')">
+    <div class="dock-item" onclick="switchTab('recipe', '🍽 Рецепт', 'Пошаговое меню на каждый день')">
       <div class="dock-icon">🍽</div>
-      <div class="dock-text">Рецепты</div>
+      <div class="dock-text">Рецепт</div>
+    </div>
+    <div class="dock-item" onclick="switchTab('cart', '🛒 Корзина', 'Оформление доставки в супермаркетах')">
+      <div class="dock-icon">🛒</div>
+      <div class="dock-text">Корзина</div>
+    </div>
+    <div class="dock-item" onclick="switchTab('profile', '👤 Профиль', 'Параметры тела, ИМТ и образ жизни')">
+      <div class="dock-icon">👤</div>
+      <div class="dock-text">Профиль</div>
     </div>
   </nav>
 
@@ -1104,272 +316,6 @@
       // Обновляем шапку
       document.getElementById('screenTitle').innerText = title;
       document.getElementById('screenSubtitle').innerText = subtitle;
-
-      if (tabKey === 'rings') {
-        renderRings();
-      } else if (tabKey === 'showcase') {
-        renderShowcase();
-      } else if (tabKey === 'economy') {
-        renderEconomy();
-      }
-    }
-
-    // Состояние бюджета и экономии (Раздел 4)
-    let currentBudgetLimit = 1500;
-
-    function applyPresetBudget(val) {
-      triggerHaptic();
-      currentBudgetLimit = val;
-      document.querySelectorAll('.preset-pill').forEach(p => {
-        p.classList.toggle('active', p.innerText.includes(val.toLocaleString()));
-      });
-      renderEconomy();
-    }
-
-    function renderEconomy() {
-      // Суммируем актуальную стоимость из витрины
-      let spent = 0;
-      showcaseItems.forEach(it => { spent += it.price * it.qty; });
-
-      const budgetEl = document.getElementById('economyBudgetText');
-      if (budgetEl) budgetEl.innerText = currentBudgetLimit.toLocaleString() + ' ₽';
-
-      const spentEl = document.getElementById('spentVal');
-      if (spentEl) spentEl.innerText = spent.toLocaleString() + ' ₽';
-
-      const diff = currentBudgetLimit - spent;
-      const leftEl = document.getElementById('leftVal');
-      const sugTitle = document.getElementById('sugTitle');
-      const sugDesc = document.getElementById('sugDesc');
-      const bar = document.getElementById('meterSpentBar');
-
-      const pct = Math.min(Math.max((spent / currentBudgetLimit) * 100, 5), 100);
-      if (bar) bar.style.width = pct + '%';
-
-      if (diff >= 0) {
-        if (leftEl) {
-          leftEl.innerText = '+' + diff.toLocaleString() + ' ₽';
-          leftEl.style.color = '#10b981';
-        }
-        if (sugTitle) sugTitle.innerText = `Осталось ${diff.toLocaleString()} ₽!`;
-        if (sugDesc) {
-          if (diff >= 150) {
-            sugDesc.innerText = 'Отличный резерв! Можно добавить упаковку сезонных фруктов или пачку полезных семян чиа.';
-          } else if (diff >= 70) {
-            sugDesc.innerText = 'Этих денег как раз хватит на пучок свежей зелени или дополнительную пачку Геркулеса.';
-          } else {
-            sugDesc.innerText = 'Корзина заполнена ювелирно! Бюджет использован с максимальной пользой.';
-          }
-        }
-      } else {
-        if (leftEl) {
-          leftEl.innerText = diff.toLocaleString() + ' ₽';
-          leftEl.style.color = '#f43f5e';
-        }
-        if (sugTitle) sugTitle.innerText = `Превышение на ${Math.abs(diff)} ₽`;
-        if (sugDesc) sugDesc.innerText = 'Попробуйте заменить курицу на минтай или убрать 1 позицию сыра в Разделе 3.';
-      }
-    }
-
-    // Состояние корзины витрины (Раздел 3)
-    let showcaseItems = [
-      { id: 1, name: "Филе грудки цыпленка", icon: "🍗", price: 369, weight: 850, p: 23, f: 2, c: 0, qty: 1, alt: "Филе индейки" },
-      { id: 2, name: "Яйца куриные С1 (10 шт)", icon: "🥚", price: 119, weight: 550, p: 13, f: 11, c: 1, qty: 2, alt: "Яйца перепелиные" },
-      { id: 3, name: "Творог рассыпчатый 5%", icon: "🧀", price: 99, weight: 200, p: 16, f: 5, c: 3, qty: 2, alt: "Греческий йогурт" },
-      { id: 4, name: "Крупа гречневая ядрица", icon: "🌾", price: 79, weight: 800, p: 13, f: 3, c: 62, qty: 1, alt: "Рис бурый" },
-      { id: 5, name: "Овсяные хлопья Геркулес", icon: "🥣", price: 69, weight: 500, p: 12, f: 6, c: 62, qty: 1, alt: "Хлопья 4 злака" },
-      { id: 6, name: "Огурцы среднеплодные", icon: "🥒", price: 129, weight: 600, p: 1, f: 0, c: 3, qty: 1, alt: "Томаты на ветке" },
-      { id: 7, name: "Сыр Тильзитер 45%", icon: "🧀", price: 189, weight: 200, p: 25, f: 26, c: 0, qty: 1, alt: "Сыр легкий 15%" },
-      { id: 8, name: "Яблоки красные сезонные", icon: "🍎", price: 119, weight: 1000, p: 0, f: 0, c: 10, qty: 1, alt: "Бананы свежие" }
-    ];
-
-    function renderShowcase() {
-      const container = document.getElementById('productsCatalogContainer');
-      if (!container) return;
-
-      container.innerHTML = '';
-      let total = 0;
-
-      showcaseItems.forEach((item, idx) => {
-        total += item.price * item.qty;
-        const card = document.createElement('div');
-        card.className = 'product-row-card';
-        card.innerHTML = `
-          <div class="product-avatar">${item.icon}</div>
-          <div class="product-main-info">
-            <div class="product-title">${item.name}</div>
-            <div class="product-meta">${item.weight}г · Б: ${item.p}г · Ж: ${item.f}г · У: ${item.c}г</div>
-          </div>
-          <div class="product-price-block">
-            <div class="product-single-price">${item.price * item.qty} ₽</div>
-            <div class="product-single-weight">${item.price} ₽/шт</div>
-          </div>
-          <div class="stepper">
-            <button class="stepper-btn" onclick="changeQty(${idx}, -1)">−</button>
-            <span class="stepper-qty">${item.qty}</span>
-            <button class="stepper-btn" onclick="changeQty(${idx}, 1)">+</button>
-          </div>
-          <button class="swap-btn" title="Заменить на аналог" onclick="swapProduct(${idx})">🔁</button>
-        `;
-        container.appendChild(card);
-      });
-
-      const totalBadge = document.getElementById('showcaseTotalCost');
-      if (totalBadge) totalBadge.innerText = total.toLocaleString() + ' ₽';
-    }
-
-    function changeQty(idx, delta) {
-      triggerHaptic();
-      showcaseItems[idx].qty += delta;
-      if (showcaseItems[idx].qty < 1) showcaseItems[idx].qty = 1;
-      renderShowcase();
-    }
-
-    function swapProduct(idx) {
-      triggerHaptic();
-      const current = showcaseItems[idx];
-      const oldName = current.name;
-      current.name = current.alt;
-      current.alt = oldName;
-      renderShowcase();
-    }
-
-    // Рендер и анимация колец КБЖУ (Раздел 2)
-    function renderRings() {
-      // Базовые суточные цели под выбранную цель
-      let dailyCal = 2200, dailyP = 130, dailyF = 65, dailyC = 250;
-      if (selectedGoal === 'weight_loss') {
-        dailyCal = 1800; dailyP = 140; dailyF = 50; dailyC = 190;
-      } else if (selectedGoal === 'muscle_gain') {
-        dailyCal = 2600; dailyP = 160; dailyF = 75; dailyC = 310;
-      } else if (selectedGoal === 'student_budget') {
-        dailyCal = 2100; dailyP = 120; dailyF = 55; dailyC = 260;
-      }
-
-      const tCal = dailyCal * selectedDays;
-      const tP = dailyP * selectedDays;
-      const tF = dailyF * selectedDays;
-      const tC = dailyC * selectedDays;
-
-      // Текущие собранные факты (рассчитанные из типовой корзины)
-      const curCal = Math.round(tCal * 0.96);
-      const curP = Math.round(tP * 0.98);
-      const curF = Math.round(tF * 0.91);
-      const curC = Math.round(tC * 0.94);
-
-      // Обновляем текст в центре и на плашках
-      document.getElementById('calGoalBadge').innerText = `Норма на ${selectedDays} дн.`;
-      document.getElementById('centerCalVal').innerText = curCal.toLocaleString();
-      document.getElementById('centerTargetCal').innerText = tCal.toLocaleString();
-
-      document.getElementById('ringProteinVal').innerText = curP + 'г';
-      document.getElementById('targetProteinVal').innerText = tP + 'г';
-
-      document.getElementById('ringFatVal').innerText = curF + 'г';
-      document.getElementById('targetFatVal').innerText = tF + 'г';
-
-      document.getElementById('ringCarbVal').innerText = curC + 'г';
-      document.getElementById('targetCarbVal').innerText = tC + 'г';
-
-      // Анимация SVG колец через stroke-dashoffset
-      // Формула: circumference = 2 * PI * r
-      const pCirc = 2 * Math.PI * 80; // 502.65
-      const fCirc = 2 * Math.PI * 64; // 402.12
-      const cCirc = 2 * Math.PI * 48; // 301.59
-
-      const pPct = Math.min(curP / tP, 1.0);
-      const fPct = Math.min(curF / tF, 1.0);
-      const cPct = Math.min(curC / tC, 1.0);
-
-      setTimeout(() => {
-        const ringP = document.getElementById('ringProtein');
-        const ringF = document.getElementById('ringFat');
-        const ringC = document.getElementById('ringCarb');
-
-        if (ringP) ringP.style.strokeDashoffset = pCirc * (1 - pPct);
-        if (ringF) ringF.style.strokeDashoffset = fCirc * (1 - fPct);
-        if (ringC) ringC.style.strokeDashoffset = cCirc * (1 - cPct);
-      }, 50);
-    }
-
-    // Состояние выбора пользователя
-    let selectedStore = 'pyaterochka';
-    let selectedGoal = 'maintenance';
-    let selectedDays = 3;
-
-    function selectStore(el, storeKey) {
-      triggerHaptic();
-      document.querySelectorAll('#storeChips .chip').forEach(c => c.classList.remove('active'));
-      el.classList.add('active');
-      selectedStore = storeKey;
-      updateSummary();
-    }
-
-    function selectGoal(el, goalKey) {
-      triggerHaptic();
-      document.querySelectorAll('#goalChips .chip').forEach(c => c.classList.remove('active'));
-      el.classList.add('active');
-      selectedGoal = goalKey;
-      updateSummary();
-    }
-
-    function selectDays(el, daysVal) {
-      triggerHaptic();
-      document.querySelectorAll('#daysChips .chip').forEach(c => c.classList.remove('active'));
-      el.classList.add('active');
-      selectedDays = daysVal;
-      updateSummary();
-    }
-
-    function updateSummary() {
-      const storeMap = { pyaterochka: 'Пятёрочка', magnit: 'Магнит', perekrestok: 'Перекрёсток' };
-      const goalMap = { maintenance: 'Баланс', weight_loss: 'Похудение', muscle_gain: 'Масса', student_budget: 'Эконом' };
-      const summaryEl = document.getElementById('chipsSummary');
-      if (summaryEl) {
-        summaryEl.innerText = `${storeMap[selectedStore]} · ${goalMap[selectedGoal]} · ${selectedDays} дн.`;
-      }
-    }
-
-    // Управление темами и Haptics (Раздел 5)
-    function setThemeAccent(el, hexColor) {
-      triggerHaptic();
-      document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
-      el.classList.add('active');
-      document.documentElement.style.setProperty('--accent', hexColor);
-    }
-
-    function setThemeMode(el, mode) {
-      triggerHaptic();
-      document.querySelectorAll('#tab-themes .chip').forEach(c => c.classList.remove('active'));
-      el.classList.add('active');
-
-      if (mode === 'midnight') {
-        document.documentElement.style.setProperty('--bg-color', '#030712');
-        document.documentElement.style.setProperty('--card-bg', '#111827');
-        document.documentElement.style.setProperty('--text-color', '#f9fafb');
-      } else if (mode === 'light') {
-        document.documentElement.style.setProperty('--bg-color', '#f1f5f9');
-        document.documentElement.style.setProperty('--card-bg', '#ffffff');
-        document.documentElement.style.setProperty('--text-color', '#0f172a');
-        document.documentElement.style.setProperty('--hint-color', '#64748b');
-      } else { // Dark (default)
-        document.documentElement.style.setProperty('--bg-color', '#0b1120');
-        document.documentElement.style.setProperty('--card-bg', '#1e293b');
-        document.documentElement.style.setProperty('--text-color', '#f8fafc');
-        document.documentElement.style.setProperty('--hint-color', '#94a3b8');
-      }
-    }
-
-    function testHaptic(style) {
-      if (tg?.HapticFeedback) {
-        tg.HapticFeedback.impactOccurred(style);
-      }
-    }
-
-    function testHapticNotification(type) {
-      if (tg?.HapticFeedback) {
-        tg.HapticFeedback.notificationOccurred(type);
-      }
     }
   </script>
 </body>
