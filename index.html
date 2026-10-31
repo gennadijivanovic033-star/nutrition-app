@@ -138,14 +138,25 @@
       color: var(--text-color);
     }
 
-    select, input[type="range"] {
-      background: rgba(255,255,255,0.08);
-      color: var(--text-color);
-      border: 1px solid rgba(255,255,255,0.12);
+    select {
+      background: #1e293b;
+      color: #f8fafc;
+      border: 1px solid rgba(255,255,255,0.2);
       border-radius: 8px;
       padding: 6px 10px;
       font-size: 14px;
       outline: none;
+      cursor: pointer;
+    }
+
+    select option {
+      background-color: #1e293b;
+      color: #ffffff;
+      padding: 10px;
+    }
+
+    input[type="range"] {
+      accent-color: var(--button-color);
     }
 
     select {
