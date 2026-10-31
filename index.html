@@ -250,17 +250,110 @@
       line-height: 1;
     }
 
-    .chip-badge {
-      font-size: 11px;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 2px 6px;
-      border-radius: 6px;
-      margin-left: auto;
-      color: var(--hint-color);
+    /* Раздел 2: Кольца КБЖУ (Apple Health / Yazio стиль) */
+    .rings-wrapper {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin: 10px auto 16px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .chip.active .chip-badge {
-      background: rgba(56, 189, 248, 0.25);
-      color: #38bdf8;
+
+    .rings-svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+
+    .ring-bg {
+      fill: none;
+      stroke-width: 10;
+      opacity: 0.16;
+    }
+
+    .ring-progress {
+      fill: none;
+      stroke-width: 10;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .ring-protein { stroke: var(--protein); }
+    .ring-fat { stroke: var(--fat); }
+    .ring-carb { stroke: var(--carb); }
+
+    .rings-center-text {
+      position: absolute;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .rings-center-cal {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text-color);
+      line-height: 1.1;
+    }
+
+    .rings-center-label {
+      font-size: 11px;
+      color: var(--hint-color);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    .macro-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .macro-card-item {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 10px 8px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .macro-card-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
+
+    .card-protein::before { background: var(--protein); }
+    .card-fat::before { background: var(--fat); }
+    .card-carb::before { background: var(--carb); }
+
+    .macro-title {
+      font-size: 11px;
+      color: var(--hint-color);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .macro-grams {
+      font-size: 16px;
+      font-weight: 800;
+      margin-top: 3px;
+    }
+
+    .macro-target-hint {
+      font-size: 10px;
+      color: var(--hint-color);
+      margin-top: 2px;
     }
   </style>
 </head>
@@ -361,11 +454,64 @@
   <!-- РАЗДЕЛ 2: Визуализация КБЖУ в виде кольцевых диаграмм (Apple Health / Язио) -->
   <section id="tab-rings" class="tab-section">
     <div class="card">
-      <div class="section-title">Раздел 2: Кольца КБЖУ</div>
-      <div class="placeholder-box">
-        <div class="placeholder-icon">⭕</div>
-        <div class="placeholder-title">Кольцевые диаграммы</div>
-        <div class="placeholder-desc">Здесь появятся анимированные кольца активности (Apple Health стиль) для Белка, Жиров, Углеводов и Калорий.</div>
+      <div class="section-title" style="display: flex; justify-content: space-between;">
+        <span>⭕ Кольца активности КБЖУ</span>
+        <span id="calGoalBadge" style="color: var(--accent); font-weight: 700;">Норма на 3 дня</span>
+      </div>
+
+      <!-- Тройное кольцо активности Apple Health -->
+      <div class="rings-wrapper">
+        <svg class="rings-svg" viewBox="0 0 200 200">
+          <!-- 1. Внешнее кольцо: Белки (Радиус 80) -->
+          <circle class="ring-bg ring-protein" cx="100" cy="100" r="80"></circle>
+          <circle id="ringProtein" class="ring-progress ring-protein" cx="100" cy="100" r="80"
+                  stroke-dasharray="502.65" stroke-dashoffset="502.65"></circle>
+
+          <!-- 2. Среднее кольцо: Жиры (Радиус 64) -->
+          <circle class="ring-bg ring-fat" cx="100" cy="100" r="64"></circle>
+          <circle id="ringFat" class="ring-progress ring-fat" cx="100" cy="100" r="64"
+                  stroke-dasharray="402.12" stroke-dashoffset="402.12"></circle>
+
+          <!-- 3. Внутреннее кольцо: Углеводы (Радиус 48) -->
+          <circle class="ring-bg ring-carb" cx="100" cy="100" r="48"></circle>
+          <circle id="ringCarb" class="ring-progress ring-carb" cx="100" cy="100" r="48"
+                  stroke-dasharray="301.59" stroke-dashoffset="301.59"></circle>
+        </svg>
+
+        <!-- Центр кольца: Калории -->
+        <div class="rings-center-text">
+          <div class="rings-center-cal" id="centerCalVal">2 140</div>
+          <div class="rings-center-label">ккал / <span id="centerTargetCal">2 200</span></div>
+        </div>
+      </div>
+
+      <!-- Плашки микроэлементов с прогрессом -->
+      <div class="macro-cards-grid">
+        <div class="macro-card-item card-protein">
+          <div class="macro-title" style="color: var(--protein);">🥩 Белки</div>
+          <div class="macro-grams" id="ringProteinVal">128г</div>
+          <div class="macro-target-hint">цель: <span id="targetProteinVal">130г</span></div>
+        </div>
+
+        <div class="macro-card-item card-fat">
+          <div class="macro-title" style="color: var(--fat);">🥑 Жиры</div>
+          <div class="macro-grams" id="ringFatVal">58г</div>
+          <div class="macro-target-hint">цель: <span id="targetFatVal">65г</span></div>
+        </div>
+
+        <div class="macro-card-item card-carb">
+          <div class="macro-title" style="color: var(--carb);">🍚 Угли</div>
+          <div class="macro-grams" id="ringCarbVal">235г</div>
+          <div class="macro-target-hint">цель: <span id="targetCarbVal">250г</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Совет диетолога по текущим кольцам -->
+    <div class="card" style="background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.25);">
+      <div style="font-size: 13.5px; font-weight: 700; color: #10b981; margin-bottom: 4px;">💡 Баланс колец:</div>
+      <div id="ringsAdvice" style="font-size: 12.5px; color: var(--hint-color); line-height: 1.4;">
+        Белок заполнен на 98%! Отличный баланс для сохранения мышечной массы и высокой сытности.
       </div>
     </div>
   </section>
@@ -476,6 +622,68 @@
       // Обновляем шапку
       document.getElementById('screenTitle').innerText = title;
       document.getElementById('screenSubtitle').innerText = subtitle;
+
+      if (tabKey === 'rings') {
+        renderRings();
+      }
+    }
+
+    // Рендер и анимация колец КБЖУ (Раздел 2)
+    function renderRings() {
+      // Базовые суточные цели под выбранную цель
+      let dailyCal = 2200, dailyP = 130, dailyF = 65, dailyC = 250;
+      if (selectedGoal === 'weight_loss') {
+        dailyCal = 1800; dailyP = 140; dailyF = 50; dailyC = 190;
+      } else if (selectedGoal === 'muscle_gain') {
+        dailyCal = 2600; dailyP = 160; dailyF = 75; dailyC = 310;
+      } else if (selectedGoal === 'student_budget') {
+        dailyCal = 2100; dailyP = 120; dailyF = 55; dailyC = 260;
+      }
+
+      const tCal = dailyCal * selectedDays;
+      const tP = dailyP * selectedDays;
+      const tF = dailyF * selectedDays;
+      const tC = dailyC * selectedDays;
+
+      // Текущие собранные факты (рассчитанные из типовой корзины)
+      const curCal = Math.round(tCal * 0.96);
+      const curP = Math.round(tP * 0.98);
+      const curF = Math.round(tF * 0.91);
+      const curC = Math.round(tC * 0.94);
+
+      // Обновляем текст в центре и на плашках
+      document.getElementById('calGoalBadge').innerText = `Норма на ${selectedDays} дн.`;
+      document.getElementById('centerCalVal').innerText = curCal.toLocaleString();
+      document.getElementById('centerTargetCal').innerText = tCal.toLocaleString();
+
+      document.getElementById('ringProteinVal').innerText = curP + 'г';
+      document.getElementById('targetProteinVal').innerText = tP + 'г';
+
+      document.getElementById('ringFatVal').innerText = curF + 'г';
+      document.getElementById('targetFatVal').innerText = tF + 'г';
+
+      document.getElementById('ringCarbVal').innerText = curC + 'г';
+      document.getElementById('targetCarbVal').innerText = tC + 'г';
+
+      // Анимация SVG колец через stroke-dashoffset
+      // Формула: circumference = 2 * PI * r
+      const pCirc = 2 * Math.PI * 80; // 502.65
+      const fCirc = 2 * Math.PI * 64; // 402.12
+      const cCirc = 2 * Math.PI * 48; // 301.59
+
+      const pPct = Math.min(curP / tP, 1.0);
+      const fPct = Math.min(curF / tF, 1.0);
+      const cPct = Math.min(curC / tC, 1.0);
+
+      setTimeout(() => {
+        const ringP = document.getElementById('ringProtein');
+        const ringF = document.getElementById('ringFat');
+        const ringC = document.getElementById('ringCarb');
+
+        if (ringP) ringP.style.strokeDashoffset = pCirc * (1 - pPct);
+        if (ringF) ringF.style.strokeDashoffset = fCirc * (1 - fPct);
+        if (ringC) ringC.style.strokeDashoffset = cCirc * (1 - cPct);
+      }, 50);
     }
 
     // Состояние выбора пользователя
