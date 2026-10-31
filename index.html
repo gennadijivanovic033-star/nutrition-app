@@ -209,23 +209,51 @@
       color: var(--hint-color);
     }
 
+    /* Floating Glassmorphism Dock Bar */
     .bottom-bar {
       position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: var(--card-bg);
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding: 12px 16px;
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
+      max-width: 480px;
+      margin: 0 auto;
+      background: rgba(30, 41, 59, 0.78);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 20px;
+      padding: 8px 12px;
       display: flex;
-      gap: 10px;
+      align-items: center;
+      gap: 12px;
       z-index: 100;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 0 1px 1px rgba(255, 255, 255, 0.08) inset;
+    }
+
+    .dock-info {
+      display: flex;
+      flex-direction: column;
+      padding-left: 4px;
+    }
+
+    .dock-label {
+      font-size: 11px;
+      color: var(--hint-color);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      font-weight: 600;
+    }
+
+    .dock-cost {
+      font-size: 17px;
+      font-weight: 800;
+      color: #38bdf8;
+      letter-spacing: -0.2px;
     }
 
     .btn {
-      flex: 1;
-      padding: 12px;
-      border-radius: 12px;
+      padding: 12px 16px;
+      border-radius: 14px;
       border: none;
       font-size: 14px;
       font-weight: 700;
@@ -233,19 +261,42 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 8px;
       text-decoration: none;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn:active {
+      transform: scale(0.96);
+    }
+
+    .btn-icon {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-color);
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .btn-icon:hover {
+      background: rgba(255, 255, 255, 0.14);
     }
 
     .btn-primary {
-      background: var(--button-color);
-      color: var(--button-text);
+      flex: 1;
+      height: 44px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.38);
     }
 
-    .btn-secondary {
-      background: rgba(255,255,255,0.1);
-      color: var(--text-color);
-      flex: 0.6;
+    .btn-primary:hover {
+      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.5);
     }
   </style>
 </head>
@@ -336,8 +387,15 @@
   </div>
 
   <div class="bottom-bar">
-    <button class="btn btn-secondary" onclick="calculateBasket()">🔄 Обновить</button>
-    <a id="orderBtn" class="btn btn-primary" href="https://kuper.ru" target="_blank">🛒 Заказать в Купере</a>
+    <button class="btn btn-icon" onclick="triggerHaptic(); calculateBasket();" title="Пересчитать">🔄</button>
+    <div class="dock-info">
+      <span class="dock-label">К оплате:</span>
+      <span class="dock-cost" id="dockCost">0 ₽</span>
+    </div>
+    <a id="orderBtn" class="btn btn-primary" href="https://kuper.ru" target="_blank" onclick="triggerHaptic()">
+      <span>Заказать</span>
+      <span>⚡</span>
+    </a>
   </div>
 
   <script>
@@ -345,6 +403,12 @@
     if (tg) {
       tg.ready();
       tg.expand();
+    }
+
+    function triggerHaptic() {
+      if (tg?.HapticFeedback) {
+        tg.HapticFeedback.impactOccurred('medium');
+      }
     }
 
     const CATALOG = [
@@ -447,6 +511,8 @@
       document.getElementById('fatsVal').innerText = Math.round(totalF) + 'г';
       document.getElementById('carbsVal').innerText = Math.round(totalC) + 'г';
       document.getElementById('totalCostBadge').innerText = Math.round(currentCost) + ' ₽';
+      const dockCost = document.getElementById('dockCost');
+      if (dockCost) dockCost.innerText = Math.round(currentCost) + ' ₽';
 
       const container = document.getElementById('itemsContainer');
       container.innerHTML = '';
