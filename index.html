@@ -569,6 +569,60 @@
       color: var(--hint-color);
       margin-top: 2px;
     }
+
+    /* Раздел 5: Темы и Тактильный отклик */
+    .theme-color-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .color-swatch {
+      flex: 1;
+      height: 42px;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      border: 2px solid transparent;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .color-swatch:active {
+      transform: scale(0.94);
+    }
+
+    .color-swatch.active {
+      border-color: #ffffff;
+      box-shadow: 0 0 14px rgba(255, 255, 255, 0.4);
+    }
+
+    .haptic-test-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .haptic-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 10px 4px;
+      text-align: center;
+      cursor: pointer;
+      color: var(--text-color);
+      font-size: 12px;
+      font-weight: 700;
+      transition: background 0.15s ease;
+    }
+
+    .haptic-btn:active {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: #38bdf8;
+    }
   </style>
 </head>
 <body>
@@ -805,12 +859,50 @@
 
   <!-- РАЗДЕЛ 5: Темы оформления и тактильный отклик (Haptic Feedback) -->
   <section id="tab-themes" class="tab-section">
+    <!-- Выбор акцентного цвета приложения -->
     <div class="card">
-      <div class="section-title">Раздел 5: Темы & Haptics</div>
-      <div class="placeholder-box">
-        <div class="placeholder-icon">🎨</div>
-        <div class="placeholder-title">Стилизация и виброотклик</div>
-        <div class="placeholder-desc">Здесь будут переключатели светлой/тёмной темы, акцентных цветов и настройки тактильной отдачи.</div>
+      <div class="section-title">🎨 Акцентный цвет интерфейса</div>
+      <div style="font-size: 12.5px; color: var(--hint-color);">Выберите стиль подсветки элементов:</div>
+      <div class="theme-color-row">
+        <div class="color-swatch active" style="background: linear-gradient(135deg, #0284c7, #38bdf8);" onclick="setThemeAccent(this, '#38bdf8')">⚡</div>
+        <div class="color-swatch" style="background: linear-gradient(135deg, #059669, #10b981);" onclick="setThemeAccent(this, '#10b981')">🌿</div>
+        <div class="color-swatch" style="background: linear-gradient(135deg, #e11d48, #f43f5e);" onclick="setThemeAccent(this, '#f43f5e')">🔥</div>
+        <div class="color-swatch" style="background: linear-gradient(135deg, #7c3aed, #a855f7);" onclick="setThemeAccent(this, '#a855f7')">💎</div>
+        <div class="color-swatch" style="background: linear-gradient(135deg, #d97706, #f59e0b);" onclick="setThemeAccent(this, '#f59e0b')">☀️</div>
+      </div>
+    </div>
+
+    <!-- Режим фона (Тёмный / Светлый / Midnight) -->
+    <div class="card">
+      <div class="section-title">🌓 Режим темы оформления</div>
+      <div class="chip-scroll" style="justify-content: space-between;">
+        <div class="chip active" style="flex: 1; justify-content: center;" onclick="setThemeMode(this, 'dark')">
+          <span>🌙 Тёмная</span>
+        </div>
+        <div class="chip" style="flex: 1; justify-content: center;" onclick="setThemeMode(this, 'midnight')">
+          <span>🌌 Midnight</span>
+        </div>
+        <div class="chip" style="flex: 1; justify-content: center;" onclick="setThemeMode(this, 'light')">
+          <span>☀️ Светлая</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Интерактивный тест Haptic Feedback -->
+    <div class="card">
+      <div class="section-title">📳 Тактильный виброотклик (Haptics)</div>
+      <div style="font-size: 12.5px; color: var(--hint-color); margin-bottom: 8px;">
+        Проверьте вибромотор смартфона в Telegram:
+      </div>
+      <div class="haptic-test-grid">
+        <div class="haptic-btn" onclick="testHaptic('light')">Лёгкий (Light)</div>
+        <div class="haptic-btn" onclick="testHaptic('medium')">Средний (Medium)</div>
+        <div class="haptic-btn" onclick="testHaptic('heavy')">Мощный (Heavy)</div>
+      </div>
+      <div class="haptic-test-grid" style="margin-top: 8px;">
+        <div class="haptic-btn" style="color: #10b981;" onclick="testHapticNotification('success')">✅ Успех</div>
+        <div class="haptic-btn" style="color: #f59e0b;" onclick="testHapticNotification('warning')">⚠️ Внимание</div>
+        <div class="haptic-btn" style="color: #f43f5e;" onclick="testHapticNotification('error')">❌ Ошибка</div>
       </div>
     </div>
   </section>
@@ -1108,6 +1200,48 @@
       const summaryEl = document.getElementById('chipsSummary');
       if (summaryEl) {
         summaryEl.innerText = `${storeMap[selectedStore]} · ${goalMap[selectedGoal]} · ${selectedDays} дн.`;
+      }
+    }
+
+    // Управление темами и Haptics (Раздел 5)
+    function setThemeAccent(el, hexColor) {
+      triggerHaptic();
+      document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+      el.classList.add('active');
+      document.documentElement.style.setProperty('--accent', hexColor);
+    }
+
+    function setThemeMode(el, mode) {
+      triggerHaptic();
+      document.querySelectorAll('#tab-themes .chip').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+
+      if (mode === 'midnight') {
+        document.documentElement.style.setProperty('--bg-color', '#030712');
+        document.documentElement.style.setProperty('--card-bg', '#111827');
+        document.documentElement.style.setProperty('--text-color', '#f9fafb');
+      } else if (mode === 'light') {
+        document.documentElement.style.setProperty('--bg-color', '#f1f5f9');
+        document.documentElement.style.setProperty('--card-bg', '#ffffff');
+        document.documentElement.style.setProperty('--text-color', '#0f172a');
+        document.documentElement.style.setProperty('--hint-color', '#64748b');
+      } else { // Dark (default)
+        document.documentElement.style.setProperty('--bg-color', '#0b1120');
+        document.documentElement.style.setProperty('--card-bg', '#1e293b');
+        document.documentElement.style.setProperty('--text-color', '#f8fafc');
+        document.documentElement.style.setProperty('--hint-color', '#94a3b8');
+      }
+    }
+
+    function testHaptic(style) {
+      if (tg?.HapticFeedback) {
+        tg.HapticFeedback.impactOccurred(style);
+      }
+    }
+
+    function testHapticNotification(type) {
+      if (tg?.HapticFeedback) {
+        tg.HapticFeedback.notificationOccurred(type);
       }
     }
   </script>
